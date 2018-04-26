@@ -4,40 +4,38 @@ typedef enum reg[2:0] {IDLE, MAC1, MAC2, MAX, DONE} state;
 state curr_state, next_state;
 
 output [9:0] addr_input_unit;
+
+input logic clk, we;
 input logic q_input;
-input logic clk, we, data;
-logic [9:0] addr;
-logic [14:0] addr_rom_hidden_weight;
-logic [7:0] q_extended, rom_hidden_data;
-logic [7:0] a, b, yk, ram_hidden_data, output_weight;
+logic [14:0] hidden_weight_addr;
+logic [7:0] q_extended, hidden_weight_q;
+logic [7:0] a, b, yk, ram_hidden_data, output_weight_q, yykk;
 logic [25:0] acc;
 logic clr_n, rst_n;
 logic [10:0] addr_LUT;
 logic [4:0] addr_ram_hidden;
-logic [8:0] output_addr;
+logic [8:0] output_weight_addr;
 logic select_input;
+logic [3:0] output_unit_addr;
+logic [2:0] output_digit;
 
-rom rom_act_func_lut(.addr(.addr_LUT + 11'h0400), .clk(clk), .q(yk));
-rom rom_output_weight(.addr(output_addr), .clk(clk), .q(output_weight));
+rom hidden_weight(.addr(hidden_weight_addr), .clk(clk), .q(hidden_weight_q));
+rom output_weight(.addr(output_weight_addr), .clk(clk), .q(output_weight_q));
+ram hidden_unit(.data(yk), .addr(addr_ram_hidden), .clk(clk), .we(we), .q(ram_hidden_data));
+rom act_func_lut(.addr(.addr_LUT + 11'h0400), .clk(clk), .q(yk));
 mac mac(.clk(clk), .(a), .b(b), .acc(acc), .clr_n(clr_n), .rst_n(rst_n));
-ram ram_hidden_unit(.data(yk), .addr(addr_ram_hidden), .clk(clk), .we(we), .q(ram_hidden_data));
-ram ram_input_unit(.data(data), .addr(addr_input_unit), .we(we), .clk(clk), .q(q_input));
-rom rom_hidden_weight(.addr(addr_rom_hidden_weight), .clk(clk), .q(rom_hidden_data));
+ram output_unit(.data(yykk), .addr(output_unit_addr), .clk(clk), .we(we), .q(output_digit));
 
 assign q_extended = (q_input) ? 8'h7F : 8'h0;
+
 addr_input_unit = addr_input_unit  + 1;
 addr_rom_hidden = addr_rom_hidden + 1;
 addr_ram_hidden = addr_ram_hidden + 1;
-output_addr = output_addr + 1;
-
-
-assign q_extended = (q_input) ? 8'h7F : 8'h0;
-addr_input_unit = addr_input_unit  + 1;
-assign addr_rom_hidden_weight_max = addr_rom_hidden_weight == 25088 ? 1 : 0;
+output_weight_addr = output_weight_addr + 1;
+assign hidden_weight_addr_max = hidden_weight_addr == 25088 ? 1 : 0;
 assign addr_input_unit_max = addr_input_unit == 784 ? 1 : 0;
 assign addr_ram_hidden_max = addr_ram_hidden == 32 ? 1 : 0;
-assign output_addr_max = output_addr == 320 ? 1 : 0;
->>>>>>> 463fdc1d5a516ce3c15c5ad3c5944b53983c1cad
+assign output_weight_addr_max = output_weight_addr == 320 ? 1 : 0;
 
 if(acc[25]==0 && |acc[24:17] == 1) begin
 addr_LUT = 11'h3ff;
@@ -64,7 +62,7 @@ always_comb begin
       end
 
     MAC1:
-      if (addr_rom_hidden_weight_max)					//at middle of start bit
+      if (hidden_weight_addr_max)					//at middle of start bit
         next_state = MAC2;
       else begin
         next_state = MAC1;
@@ -72,7 +70,7 @@ always_comb begin
 
     MAC2:
       select_input = 1;
-      if (output_addr_max) begin	//middle of a bit which isn't the stop bit
+      if (output_weight_addr_max) begin	//middle of a bit which isn't the stop bit
         next_state = MAX;
       end
       else begin
