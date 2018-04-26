@@ -13,29 +13,23 @@ logic [7:0] a, b, yk, ram_hidden_data, output_weight;
 logic [25:0] acc;
 logic clr_n, rst_n;
 logic [10:0] addr_LUT;
-<<<<<<< HEAD
 logic [4:0] addr_ram_hidden;
 logic [8:0] output_addr;
-=======
 logic select_input;
->>>>>>> 463fdc1d5a516ce3c15c5ad3c5944b53983c1cad
 
 rom rom_act_func_lut(.addr(.addr_LUT + 11'h0400), .clk(clk), .q(yk));
 rom rom_output_weight(.addr(output_addr), .clk(clk), .q(output_weight));
 mac mac(.clk(clk), .(a), .b(b), .acc(acc), .clr_n(clr_n), .rst_n(rst_n));
-<<<<<<< HEAD
-ram ram_input_unit(.data(data), .addr(addr), .we(we), .clk(clk), .q(q_input));
-rom rom_hidden_weight(.addr(addr_rom_hidden), .clk(clk), .q(rom_hidden_data));
 ram ram_hidden_unit(.data(yk), .addr(addr_ram_hidden), .clk(clk), .we(we), .q(ram_hidden_data));
+ram ram_input_unit(.data(data), .addr(addr_input_unit), .we(we), .clk(clk), .q(q_input));
+rom rom_hidden_weight(.addr(addr_rom_hidden_weight), .clk(clk), .q(rom_hidden_data));
 
 assign q_extended = (q_input) ? 8'h7F : 8'h0;
 addr_input_unit = addr_input_unit  + 1;
 addr_rom_hidden = addr_rom_hidden + 1;
 addr_ram_hidden = addr_ram_hidden + 1;
 output_addr = output_addr + 1;
-=======
-ram ram_input_unit(.data(data), .addr(addr_input_unit), .we(we), .clk(clk), .q(q_input));
-rom rom_hidden_weight(.addr(addr_rom_hidden_weight), .clk(clk), .q(rom_hidden_data));
+
 
 assign q_extended = (q_input) ? 8'h7F : 8'h0;
 addr_input_unit = addr_input_unit  + 1;
