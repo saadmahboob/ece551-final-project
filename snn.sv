@@ -25,18 +25,18 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	logic rx_rdy, tx_rdy, snn_done, q_input, ram_in;
 	logic[7:0] rx_data, tx_data;
 	logic[3:0] digit;
-	logic[9:0] addr_input_unit, write_address, read_address;
-
-	assign addr_input_unit = write_enable ? write_address : read_address;
+	logic[9:0] addr_input_unit, write_addr, read_addr;
 
 	//control FSM wires
-	logic snn_start, write_enable, tx_rdy, shift;
+	logic snn_start, write_enable, shift;
 	logic [3:0]shift_cnt;
+	
+	assign addr_input_unit = write_enable ? write_addr : read_addr;
 
 	uart_rx uart_rx_in(.clk(clk), .rst_n(sys_rst_n), .rx(uart_rx_synch), .rx_data(rx_data), .rx_rdy(rx_rdy));
 	ram_input test_data(.data(rx_data[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
 	//logic between test_data and core: q_input. addr_input_unit
-	snn_core core(.start(snn_start), .q_input(q_input), .addr_input_unit(read_address), .digit(digit), .done(snn_done));
+	snn_core core(.start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_done));
 	//logic between core and tx_out: snn_done, digit
 	uart_tx uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_done), .tx_data(tx_data), .tx(uart_tx), .tx_rdy());
 	
@@ -53,16 +53,18 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 
 	always_ff @(posedge clk, negedge rst_n) 
 		if (!rst_n) begin
-			shift_cnt <= 0;
-			write_addr <= 0;
+			shift_cnt <= 3'h0;
+			write_addr <= 10'h0;
+			rx_data <= 8'h0;
 		end
-		if (shift) begin
+		else if (shift) begin
 			rx_data <= {1'b0, rx_data[7:1]};
 			shift_cnt <= shift_cnt + 1;
-			write_addr <= write_address + 1;
+			write_addr <= write_addr + 1;
 		end
-		else
+		else begin
 			shift_cnt <= 3'h0;
+		end
 
 	assign max_shift = (shift_cnt == 3'h7) ? 1 : 0;
 	assign max_addr = (write_addr == 10'h310) ? 1: 0;
@@ -76,17 +78,16 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	typedef enum reg[1:0] {IDLE, LOAD, READ} state_t;
 	state_t state, next_state;
 
-	always_ff (@posedge clk, negedge rst_n) {
+	always_ff @(posedge clk, negedge rst_n)
 		if (!rst_n)
         	state <= IDLE;
     	else
-    		state <= nxt_state;
-	}
+    		state <= next_state;
 
 	always_comb begin
 		next_state = IDLE;
 		snn_start = 0;
-		write = 0;
+		write_enable = 0;
 		shift = 0;
 
 		case(state)
@@ -100,7 +101,7 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 				write_enable = 1;
 				if (~max_shift)
 					next_state = LOAD;
-				else if (addr_max)
+				else if (max_addr)
 					next_state = READ;
 			end
 			READ: begin
