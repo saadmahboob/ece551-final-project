@@ -5,8 +5,7 @@ module rom_output_weight (
  // Declare the ROM variable
  reg [7:0] rom[2**8:0];
  initial
- readmemh("Initialization file", rom);
- end
+ $readmemh("Initialization file", rom);
  always @ (posedge clk)
  begin
  q <= rom[addr];

@@ -5,8 +5,7 @@ module rom_act_func_lut (
  // Declare the ROM variable
  reg [7:0] rom[2**10:0];
  initial
- readmemh("Initialization file", rom);
- end
+ $readmemh("Initialization file", rom);
  always @ (posedge clk)
  begin
  q <= rom[addr];

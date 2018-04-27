@@ -9,8 +9,7 @@ module ram_output_unit (
  reg [3:0] addr_reg;
 
  initial
- readmemh("Initialization file", ram);
- end
+ $readmemh("Initialization file", ram);
 
  always @ (posedge clk)
  begin

@@ -1,32 +1,33 @@
-module snn_core(start, q_input, addr_input_unit, digit, done);
+module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
 typedef enum reg[2:0] {IDLE, MAC1, MAC2, MAX, DONE} state;
 state curr_state, next_state;
 
-output [9:0] addr_input_unit;
-output [3:0] digit;
+output logic [9:0] addr_input_unit;
+output logic [3:0] digit;
+output logic done;
 
-input logic clk, we;
+input logic clk, start, rst_n;
 input logic q_input;
+logic we;
 logic [14:0] hidden_weight_addr;
 logic [7:0] q_extended, hidden_weight_q;
 logic [7:0] a, b, lut_out, ram_hidden_data, output_weight_q, digit_prob;
 logic [25:0] acc;
-logic clr_n, rst_n;
+logic clr_n;
 logic [10:0] addr_LUT;
 logic [4:0] addr_ram_hidden;
 logic [8:0] output_weight_addr;
-logic select_input;
 logic [3:0] output_unit_addr;
-logic [2:0] output_digit;
-logic select_input, done, increment_input, increment_output;
+logic [2:0] output_digit, digit_count;
+logic select_input, increment_input, increment_output;
 
 rom_hidden_weight hidden_weight(.addr(hidden_weight_addr), .clk(clk), .q(hidden_weight_q));
 rom_output_weight output_weight(.addr(output_weight_addr), .clk(clk), .q(output_weight_q));
 ram_hidden_unit hidden_unit(.data(lut_out), .addr(addr_ram_hidden), .clk(clk), .we(we), .q(ram_hidden_data));
-rom_act_func_lut act_func_lut(.addr(.addr_LUT + 11'h0400), .clk(clk), .q(lut_out));
+rom_act_func_lut act_func_lut(.addr(addr_LUT + 11'h400), .clk(clk), .q(lut_out));
 mac mac(.clk(clk), .a(a), .b(b), .acc(acc), .clr_n(clr_n), .rst_n(rst_n));
-ram_output_unit output_unit(.data(lut_out), .addr(output_unit_addr), .clk(clk), .we(we), .q(digit_prob));
+ram_output_unit output_unit(.data(lut_out), .addr(output_unit_addr), .clk(clk), .we(~we), .q(digit_prob));
 
 assign q_extended = (q_input) ? 8'h7F : 8'h0;
 
@@ -36,12 +37,14 @@ assign addr_ram_hidden_max = addr_ram_hidden == 32 ? 1 : 0;
 assign output_weight_addr_max = output_weight_addr == 320 ? 1 : 0;
 assign digit_max = digit_count == 9 ? 1 : 0;
 
+always_ff @(posedge clk) begin
 if(acc[25]==0 && |acc[24:17] == 1)
   addr_LUT = 11'h3ff;
 else if(acc[25]==1 && &acc[24:17] == 0)
   addr_LUT = 11'h400;
 else
   addr_LUT = acc[17:7];
+end
 
 assign a = select_input ? ram_hidden_data : q_extended;
 assign b = select_input ? output_weight_q : hidden_weight_q;
@@ -61,19 +64,18 @@ always_ff @ (posedge clk) begin
     addr_ram_hidden = addr_ram_hidden + 1;
     output_weight_addr = output_weight_addr + 1;
   end
-
 end
 
 // FSM
 always_comb begin
   //default values
-  digit_count = 0;
   select_input = 0;
   increment_input = 0;
   increment_output = 0;
   done = 0;
+  we = 1;
 
-  case (state)
+  case (curr_state)
     IDLE:
       if (start) begin					//start bit detected
         next_state = MAC1;
@@ -87,8 +89,8 @@ always_comb begin
         next_state = MAC1;
       end
 
-    MAC2:
-      select_input = 1;
+    MAC2: begin
+      we = 0;
       if (output_weight_addr_max) begin	//middle of a bit which isn't the stop bit
         next_state = MAX;
       end
@@ -96,15 +98,17 @@ always_comb begin
         increment_output = 1;
         next_state = MAC2;
       end
+      select_input = 1;
+      end
 
-    MAX:
+    MAX: begin
       if (digit_max) begin
         done = 1;
         next_state = DONE;
       end
       else begin
-        digit_count = digit_count + 1;
         next_state = MAX;
+      end
       end
 
     DONE: next_state = IDLE;

@@ -2,8 +2,9 @@ module snn_core_tb();
 
 logic clk, rst_n, rx_rdy, tx_start, strt, done, q_input, we;
 logic [3:0] digit;
+logic [9:0] addr_reg;
 
-snn_core iDUT_snn_core(.strt(strt), .q_input(q_input), .addr_input_unit(addr_reg), .digit(digit), .done(done));
+snn_core iDUT_snn_core(.start(strt), .q_input(q_input), .addr_input_unit(addr_reg), .digit(digit), .done(done), .rst_n(rst_n), .clk(clk));
 ram iDUT_ram(.data(), .addr(addr_reg), .we(), .clk(clk), .q(q_input));
 
 task check_digit(input logic[3:0] num);
@@ -18,7 +19,7 @@ initial begin
     rst_n = 0;
     #5;
     rst_n = 1;
-    check_digit();
+    check_digit(6);
 end
 
 always @(posedge clk) begin
@@ -26,7 +27,7 @@ always @(posedge clk) begin
         strt = 0;
     end
     else begin
-        start = 1;
+        strt = 1;
     end
 end
 endmodule
@@ -44,17 +45,15 @@ reg ram[2**9:0];
 logic [9:0] addr_reg;
 
 initial begin
-    readmemh("Initialization file", ram);
-    
+    $readmemh("./Files/input\ samples/ram_input_contents_sample_6.txt", ram);
+
 end
 
 always @ (posedge clk)
 begin
     addr_reg <= addr;
-end 
+end
 
 assign q = ram[addr_reg];
 
 endmodule
-
-
