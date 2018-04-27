@@ -21,12 +21,12 @@ logic [3:0] output_unit_addr;
 logic [2:0] output_digit;
 logic select_input, done, increment_input, increment_output;
 
-rom hidden_weight(.addr(hidden_weight_addr), .clk(clk), .q(hidden_weight_q));
-rom output_weight(.addr(output_weight_addr), .clk(clk), .q(output_weight_q));
-ram hidden_unit(.data(lut_out), .addr(addr_ram_hidden), .clk(clk), .we(we), .q(ram_hidden_data));
-rom act_func_lut(.addr(.addr_LUT + 11'h0400), .clk(clk), .q(lut_out));
+rom_hidden_weight hidden_weight(.addr(hidden_weight_addr), .clk(clk), .q(hidden_weight_q));
+rom_output_weight output_weight(.addr(output_weight_addr), .clk(clk), .q(output_weight_q));
+ram_hidden_unit hidden_unit(.data(lut_out), .addr(addr_ram_hidden), .clk(clk), .we(we), .q(ram_hidden_data));
+rom_act_func_lut act_func_lut(.addr(.addr_LUT + 11'h0400), .clk(clk), .q(lut_out));
 mac mac(.clk(clk), .a(a), .b(b), .acc(acc), .clr_n(clr_n), .rst_n(rst_n));
-ram output_unit(.data(lut_out), .addr(output_unit_addr), .clk(clk), .we(we), .q(digit_prob));
+ram_output_unit output_unit(.data(lut_out), .addr(output_unit_addr), .clk(clk), .we(we), .q(digit_prob));
 
 assign q_extended = (q_input) ? 8'h7F : 8'h0;
 
