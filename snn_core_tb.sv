@@ -48,6 +48,11 @@ initial begin
     
 end
 
+always @ (posedge clk)
+begin
+    addr_reg <= addr;
+end 
+
 assign q = ram[addr_reg];
 
 endmodule

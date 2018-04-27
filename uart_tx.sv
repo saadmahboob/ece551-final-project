@@ -1,4 +1,4 @@
-//updated midnight
+
 module uart_tx(clk, rst_n, tx_start, tx_data, tx, tx_rdy);
 
   typedef enum reg [1:0] {IDLE, TX} state_t;
@@ -52,7 +52,7 @@ always_comb begin
         end
         else begin
           tx_rdy = 1;
-			 nxt_state = IDLE;
+			    nxt_state = IDLE;
 			 //tx = shift_reg[0];
 			end
       else begin
