@@ -39,13 +39,13 @@ module ram (
     output q);
 
 // Declare the RAM variable
-reg ram[2**9:0];
+reg ram[2**10-1:0];
 
 // Variable to hold the registered read address
 logic [9:0] addr_reg;
 
 initial begin
-    $readmemh("./Files/input\ samples/ram_input_contents_sample_6.txt", ram);
+    $readmemb("./Files/input\ samples/ram_input_contents_sample_6.txt", ram);
 
 end
 
