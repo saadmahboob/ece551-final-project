@@ -48,6 +48,9 @@ end
 else
 addr_LUT = acc[17:7];
 
+assign a = select_input ? ram_hidden_data : q_extended;
+assign b = select_input ? output_weight_q : hidden_weight_q;
+
 
 // FSM
 always_comb begin
