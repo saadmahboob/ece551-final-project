@@ -19,7 +19,7 @@ logic [8:0] output_weight_addr;
 logic select_input;
 logic [3:0] output_unit_addr;
 logic [2:0] output_digit;
-logic select_input, done;
+logic select_input, done, increment_input, increment_output;
 
 rom hidden_weight(.addr(hidden_weight_addr), .clk(clk), .q(hidden_weight_q));
 rom output_weight(.addr(output_weight_addr), .clk(clk), .q(output_weight_q));
@@ -49,12 +49,28 @@ assign b = select_input ? output_weight_q : hidden_weight_q;
 assign max_prob = max_prob > digit_prob ? max_prob : digit_prob;
 assign digit = max_prob > digit_prob ? digit : digit_count;
 
-assign digit_count = digit_count + 1;
+assign digit_count = (digit_max) ? 0 : digit_count + 1;
+
+always_ff @ (posedge clk) begin
+  if(increment_input) begin
+    addr_input_unit <= addr_input_unit  + 1;
+    hidden_weight_addr <= hidden_weight_addr + 1;
+  end
+
+  else if (increment_output) begin
+    addr_ram_hidden = addr_ram_hidden + 1;
+    output_weight_addr = output_weight_addr + 1;
+  end
+
+end
 
 // FSM
 always_comb begin
   //default values
+  digit_count = 0;
   select_input = 0;
+  increment_input = 0;
+  increment_output = 0;
   done = 0;
 
   case (state)
@@ -67,8 +83,7 @@ always_comb begin
       if (hidden_weight_addr_max)					//at middle of start bit
         next_state = MAC2;
       else begin
-        addr_input_unit = addr_input_unit  + 1;
-        hidden_weight_addr = hidden_weight_addr + 1;
+        increment_input = 1;
         next_state = MAC1;
       end
 
@@ -78,8 +93,7 @@ always_comb begin
         next_state = MAX;
       end
       else begin
-        addr_ram_hidden = addr_ram_hidden + 1;
-        output_weight_addr = output_weight_addr + 1;
+        increment_output = 1;
         next_state = MAC2;
       end
 
@@ -88,10 +102,12 @@ always_comb begin
         done = 1;
         next_state = DONE;
       end
-      else
+      else begin
+        digit_count = digit_count + 1;
         next_state = MAX;
+      end
 
-    DONE:
+    DONE: next_state = IDLE;
 
     endcase
   end
