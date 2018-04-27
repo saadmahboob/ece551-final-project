@@ -34,8 +34,7 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	logic [3:0]shift_cnt;
 
 	uart_rx uart_rx_in(.clk(clk), .rst_n(sys_rst_n), .rx(uart_rx_synch), .rx_data(rx_data), .rx_rdy(rx_rdy));
-	
-	ram test_data(.data(rx_data[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
+	ram_input test_data(.data(rx_data[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
 	//logic between test_data and core: q_input. addr_input_unit
 	snn_core core(.start(snn_start), .q_input(q_input), .addr_input_unit(read_address), .digit(digit), .done(snn_done));
 	//logic between core and tx_out: snn_done, digit
@@ -47,29 +46,26 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 			uart_rx_ff <= 1'b1;
 			uart_rx_synch <= 1'b1;
 		end
-	 else begin
-	  uart_rx_ff <= uart_rx;
-	  uart_rx_synch <= uart_rx_ff;
-	  if (write_enable)
-		write_address <= write_address + 1;
+	 	else begin
+	  		uart_rx_ff <= uart_rx;
+	  		uart_rx_synch <= uart_rx_ff;
 	end
 
-	always_ff @(posedge clk) 
+	always_ff @(posedge clk, negedge rst_n) 
+		if (!rst_n) begin
+			shift_cnt <= 0;
+			write_addr <= 0;
+		end
 		if (shift) begin
 			rx_data <= {1'b0, rx_data[7:1]};
 			shift_cnt <= shift_cnt + 1;
-			write_address <= write_address + 1;
+			write_addr <= write_address + 1;
 		end
-		else begin
+		else
 			shift_cnt <= 3'h0;
-			write_address <= 10'h0;
-		end
-
 
 	assign max_shift = (shift_cnt == 3'h7) ? 1 : 0;
 	assign max_addr = (write_addr == 10'h310) ? 1: 0;
-	
-	
 	assign tx_data = {4'h0, digit[3:0]};
 
 
@@ -80,7 +76,7 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	typedef enum reg[1:0] {IDLE, LOAD, READ} state_t;
 	state_t state, next_state;
 
-	always_ff (@posedge clk, negedge sys_rst_n) {
+	always_ff (@posedge clk, negedge rst_n) {
 		if (!rst_n)
         	state <= IDLE;
     	else
@@ -108,21 +104,10 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 					next_state = READ;
 			READ:
 				snn_start = 1;
-				if (~done)
+				if (~snn_done)
 					next_state = READ;
 			endcase
 	end
-
-	
-
-					
-					
-
-
-
-
-
-     
 	 
 	 
 
@@ -131,4 +116,25 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	******************************************************/
 	assign led = tx_data;
 
+endmodule
+
+module ram_input (
+	input data,
+	input [9:0] addr,
+	input we, clk,
+	output q);
+	// Declare the RAM variable
+	logic ram[2**9:0];
+	// Variable to hold the registered read address
+	reg [9:0] addr_reg;
+	initial
+		readmemh("ram_input_contents.txt", ram);
+	
+	always @ (posedge clk) begin
+	if (we) // Write
+		ram[addr] <= data;
+	addr_reg <= addr;
+	end
+
+	assign q = ram[addr_reg];
 endmodule
