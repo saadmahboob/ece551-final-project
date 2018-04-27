@@ -95,17 +95,19 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 					next_state = LOAD;
 					write_enable = 1;
 				end
-			LOAD:
+			LOAD: begin
 				shift = 1;
 				write_enable = 1;
 				if (~max_shift)
 					next_state = LOAD;
 				else if (addr_max)
 					next_state = READ;
-			READ:
+			end
+			READ: begin
 				snn_start = 1;
 				if (~snn_done)
 					next_state = READ;
+			end
 			endcase
 	end
 	 
