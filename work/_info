@@ -10,15 +10,15 @@ cModel Technology
 dC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/New folder
 vmac
 Z0 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
-!s110 1524871413
+!s110 1524876969
 !i10b 1
-!s100 ZW3ejMA6^>S5ka5N[@Z[E3
-I9<hVM2KjTlk11ZRO^oY9L3
+!s100 QTi^9kQnZ4FcJhCHYgWNN1
+I`J:_?GTAUXSJ=h;A<9hiP0
 Z1 VDg1SIo80bB@j0V0VzS_@n1
 !s105 mac_sv_unit
 S1
 Z2 dC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project
-w1524871408
+w1524876815
 8C:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv
 FC:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv
 L0 5
@@ -26,7 +26,7 @@ Z3 OP;L;10.4a;61
 r1
 !s85 0
 31
-!s108 1524871413.000000
+!s108 1524876969.000000
 !s107 C:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv|
 !s101 -O0
@@ -77,6 +77,30 @@ r1
 Z14 !s108 1524871244.000000
 !s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv|
+!s101 -O0
+!i113 1
+R4
+vram_input
+R0
+Z15 !s110 1524874976
+!i10b 1
+!s100 2=BECF:LfnZb1QZI`TR4K1
+I66EQG=@^Wbi4cZTmQOUjg3
+R1
+Z16 !s105 snn_sv_unit
+S1
+R2
+Z17 w1524874001
+Z18 8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn.sv
+Z19 FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn.sv
+L0 124
+R3
+r1
+!s85 0
+31
+Z20 !s108 1524874976.000000
+Z21 !s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn.sv|
+Z22 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn.sv|
 !s101 -O0
 !i113 1
 R4
@@ -176,17 +200,41 @@ r1
 !s101 -O0
 !i113 1
 R4
+vsnn
+R0
+R15
+!i10b 1
+!s100 L1e]hnY^bFeloQS>]:oH[0
+I9C=GK4Hg@IBi<PO6J=bn03
+R1
+R16
+S1
+R2
+R17
+R18
+R19
+L0 1
+R3
+r1
+!s85 0
+31
+R20
+R21
+R22
+!s101 -O0
+!i113 1
+R4
 vsnn_core
 R0
-!s110 1524873834
+!s110 1524877383
 !i10b 1
-!s100 M>0K<`m4D6Kf=U37f2kLH1
-ISGh;0WjYi<JnM^lcLk>LS2
+!s100 gldh=JH@niQf;]?A1e_e;1
+IEDE>>@<L9ml6G?[KZkz>72
 R1
 !s105 snn_core_sv_unit
 S1
 R2
-w1524873827
+w1524877380
 8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv
 FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv
 L0 1
@@ -194,7 +242,7 @@ R3
 r1
 !s85 0
 31
-!s108 1524873834.000000
+!s108 1524877382.000000
 !s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv|
 !s101 -O0
@@ -226,7 +274,7 @@ R12
 R4
 vuart_rx
 R0
-Z15 !s110 1524870970
+Z23 !s110 1524870970
 !i10b 1
 !s100 e1<K`0`O0BVGC`N4:9zeW3
 IIOdVXoj[DEnnJ=;]nVP>W3
@@ -242,7 +290,7 @@ R3
 r1
 !s85 0
 31
-Z16 !s108 1524870970.000000
+Z24 !s108 1524870970.000000
 !s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv|
 !s101 -O0
@@ -250,7 +298,7 @@ Z16 !s108 1524870970.000000
 R4
 vuart_tx
 R0
-R15
+R23
 !i10b 1
 !s100 <@Jkb<5`SJ2WWi36bA1kD2
 IDlb`nHVlR_ZOCf5@eRe`U3
@@ -266,7 +314,7 @@ R3
 r1
 !s85 0
 31
-R16
+R24
 !s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv|
 !s101 -O0

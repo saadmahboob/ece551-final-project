@@ -68,6 +68,7 @@ always_comb begin
   increment_input = 0;
   increment_output = 0;
   done = 0;
+  clr_n = 0;
   we = 1;
   next_state = IDLE;
 
@@ -78,9 +79,11 @@ always_comb begin
       end
 
     MAC1:
-      if (hidden_weight_addr_max)					//at middle of start bit
+      if (hidden_weight_addr_max)	begin //at middle of start bit
         next_state = MAC2;
+      end			
       else begin
+        clr_n = 1;
         increment_input = 1;
         next_state = MAC1;
       end
