@@ -1,0 +1,7 @@
+*
+
+!.gitignore
+
+!*.sv
+!README.txt
+!/Files/
