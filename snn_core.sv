@@ -31,10 +31,10 @@ ram_output_unit output_unit(.data(lut_out), .addr(output_unit_addr), .clk(clk), 
 
 assign q_extended = (q_input) ? 8'h7F : 8'h0;
 
-assign hidden_weight_addr_max = hidden_weight_addr == 25088 ? 1 : 0;
-assign addr_input_unit_max = addr_input_unit == 784 ? 1 : 0;
-assign addr_ram_hidden_max = addr_ram_hidden == 32 ? 1 : 0;
-assign output_weight_addr_max = output_weight_addr == 320 ? 1 : 0;
+assign hidden_weight_addr_max = hidden_weight_addr == 25087 ? 1 : 0;
+assign addr_input_unit_max = addr_input_unit == 783 ? 1 : 0;
+assign addr_ram_hidden_max = addr_ram_hidden == 31 ? 1 : 0;
+assign output_weight_addr_max = output_weight_addr == 319 ? 1 : 0;
 assign digit_max = digit_count == 9 ? 1 : 0;
 
 always_ff @(posedge clk) begin
@@ -54,19 +54,14 @@ assign digit = max_prob > digit_prob ? digit : digit_count;
 
 assign digit_count = (digit_max) ? 0 : digit_count + 1;
 
-always_ff @ (posedge clk) begin
-  if(increment_input) begin
-    addr_input_unit <= addr_input_unit  + 1;
-    hidden_weight_addr <= hidden_weight_addr + 1;
-  end
-
-  else if (increment_output) begin
-    addr_ram_hidden = addr_ram_hidden + 1;
-    output_weight_addr = output_weight_addr + 1;
-  end
-end
-
 // FSM
+always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n) begin
+        curr_state <= IDLE;
+      end
+    else
+        curr_state <= next_state;  
+
 always_comb begin
   //default values
   select_input = 0;
@@ -74,6 +69,7 @@ always_comb begin
   increment_output = 0;
   done = 0;
   we = 1;
+  next_state = IDLE;
 
   case (curr_state)
     IDLE:
@@ -115,5 +111,50 @@ always_comb begin
 
     endcase
   end
+
+//address input unit counter
+always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
+        addr_input_unit <= 4'b0;
+    else
+        if (addr_input_unit_max)
+            addr_input_unit <= 4'b0;
+        else
+          if (increment_input)
+            addr_input_unit <= addr_input_unit+1;
+
+//hidden weight address counter
+always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
+        hidden_weight_addr <= 4'b0;
+    else
+        if (hidden_weight_addr_max)
+          hidden_weight_addr <= 4'b0;
+        else
+          if (increment_input)
+            hidden_weight_addr <= hidden_weight_addr+1;
+
+//address ram hidden counter
+always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
+        addr_ram_hidden <= 4'b0;
+    else
+        if (addr_ram_hidden_max)
+            addr_ram_hidden <= 4'b0;
+        else
+          if (increment_output)
+            addr_ram_hidden <= addr_ram_hidden+1;
+
+//output weight address counter
+always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
+        output_weight_addr <= 4'b0;
+    else
+        if (output_weight_addr_max)
+            output_weight_addr <= 4'b0;
+        else
+          if (increment_output)
+            output_weight_addr <= output_weight_addr+1;
+
 
 endmodule

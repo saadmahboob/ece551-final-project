@@ -4,12 +4,12 @@ module ram_hidden_unit (
   input we, clk,
   output [7:0] q);
   // Declare the RAM variable
-  reg [7:0] ram[2**4:0];
+  reg [7:0] ram[2**5-1:0];
   // Variable to hold the registered read address
   reg [4:0] addr_reg;
 
   initial
-  $readmemh("Initialization file", ram);
+  $readmemh("./Files/memory\ initialization\ files/ram_hidden_contents.txt", ram);
 
   always @ (posedge clk)
   begin

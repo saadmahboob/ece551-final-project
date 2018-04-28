@@ -3,9 +3,9 @@ module rom_hidden_weight (
  input clk,
  output reg [7:0] q);
  // Declare the ROM variable
- reg [7:0] rom[2**14:0];
+ reg [7:0] rom[2**15-1:0];
  initial
- $readmemh("Initialization file", rom);
+ $readmemh("./Files/memory\ initialization\ files/rom_hidden_weight_contents.txt", rom);
  always @ (posedge clk)
  begin
  q <= rom[addr];

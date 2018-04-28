@@ -13,24 +13,31 @@ task check_digit(input logic[3:0] num);
         $display("Test passed: input: %d, digit: %d\n", num, digit);
     else
         $display("Test failed: input: %d, digit: %d\n", num, digit);
+    $stop();
 endtask
 
 initial begin
+    clk=0;
     rst_n = 0;
     #5;
     rst_n = 1;
     check_digit(6);
 end
 
-always @(posedge clk) begin
-    if (rst_n) begin
+always @(posedge clk, negedge rst_n) begin
+    if (!rst_n) begin
         strt = 0;
     end
     else begin
         strt = 1;
     end
 end
+
+always
+  #10 clk = ~clk;
+
 endmodule
+
 
 module ram (
     input data,

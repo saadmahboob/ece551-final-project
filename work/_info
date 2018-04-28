@@ -1,0 +1,274 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/New folder
+vmac
+Z0 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
+!s110 1524871413
+!i10b 1
+!s100 ZW3ejMA6^>S5ka5N[@Z[E3
+I9<hVM2KjTlk11ZRO^oY9L3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+!s105 mac_sv_unit
+S1
+Z2 dC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project
+w1524871408
+8C:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv
+FC:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv
+L0 5
+Z3 OP;L;10.4a;61
+r1
+!s85 0
+31
+!s108 1524871413.000000
+!s107 C:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv|
+!s101 -O0
+!i113 1
+Z4 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+vram
+R0
+Z5 !s110 1524872531
+!i10b 1
+!s100 Oa^I6jI]k8E_a7n0BIH1T1
+I@YUL51j_akW6oH`0eZdl92
+R1
+Z6 !s105 snn_core_tb_sv_unit
+S1
+R2
+Z7 w1524872521
+Z8 8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core_tb.sv
+Z9 FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core_tb.sv
+L0 42
+R3
+r1
+!s85 0
+31
+Z10 !s108 1524872531.000000
+Z11 !s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core_tb.sv|
+Z12 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core_tb.sv|
+!s101 -O0
+!i113 1
+R4
+vram_hidden_unit
+R0
+Z13 !s110 1524871244
+!i10b 1
+!s100 XFo4Ve3bl@bNn=nEcBB6_3
+IAFLQ`6Y^k:j?kmY9b1dPn2
+R1
+!s105 ram_hidden_unit_sv_unit
+S1
+R2
+w1524871100
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv
+L0 1
+R3
+r1
+!s85 0
+31
+Z14 !s108 1524871244.000000
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv|
+!s101 -O0
+!i113 1
+R4
+vram_output_unit
+R0
+R13
+!i10b 1
+!s100 6OL2Z[gViCl:3f9j;8TTW2
+IWzNXK9H<n=kdQl4;N4oo^3
+R1
+!s105 ram_output_unit_sv_unit
+S1
+R2
+w1524871135
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_output_unit.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_output_unit.sv
+L0 1
+R3
+r1
+!s85 0
+31
+R14
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_output_unit.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_output_unit.sv|
+!s101 -O0
+!i113 1
+R4
+vrom_act_func_lut
+R0
+R13
+!i10b 1
+!s100 `hoj?9M8Xm=QH0If@PojP3
+I[;znO1SRU2U1zZ`_mjaFh3
+R1
+!s105 rom_act_func_lut_sv_unit
+S1
+R2
+w1524871222
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_act_func_lut.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_act_func_lut.sv
+L0 1
+R3
+r1
+!s85 0
+31
+R14
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_act_func_lut.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_act_func_lut.sv|
+!s101 -O0
+!i113 1
+R4
+vrom_hidden_weight
+R0
+!s110 1524871597
+!i10b 1
+!s100 RK9;Y?om?UA]5<FS;XT1z0
+I[4Fhk_FRHj`19n:Agd;oY3
+R1
+!s105 rom_hidden_weight_sv_unit
+S1
+R2
+w1524871594
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_hidden_weight.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_hidden_weight.sv
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1524871597.000000
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_hidden_weight.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_hidden_weight.sv|
+!s101 -O0
+!i113 1
+R4
+vrom_output_weight
+R0
+!s110 1524871531
+!i10b 1
+!s100 JifU<L8BPR5nhUXIUjKL:2
+IHf]L_A^ZZjCmE8bgKmGI41
+R1
+!s105 rom_output_weight_sv_unit
+S1
+R2
+w1524871529
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_output_weight.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_output_weight.sv
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1524871531.000000
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_output_weight.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_output_weight.sv|
+!s101 -O0
+!i113 1
+R4
+vsnn_core
+R0
+!s110 1524873834
+!i10b 1
+!s100 M>0K<`m4D6Kf=U37f2kLH1
+ISGh;0WjYi<JnM^lcLk>LS2
+R1
+!s105 snn_core_sv_unit
+S1
+R2
+w1524873827
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1524873834.000000
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core.sv|
+!s101 -O0
+!i113 1
+R4
+vsnn_core_tb
+R0
+R5
+!i10b 1
+!s100 _Hm9FU<WQSGHf`a5m>bgS0
+I3kYbA:^@z0Y0<Gii:=kc]3
+R1
+R6
+S1
+R2
+R7
+R8
+R9
+L0 1
+R3
+r1
+!s85 0
+31
+R10
+R11
+R12
+!s101 -O0
+!i113 1
+R4
+vuart_rx
+R0
+Z15 !s110 1524870970
+!i10b 1
+!s100 e1<K`0`O0BVGC`N4:9zeW3
+IIOdVXoj[DEnnJ=;]nVP>W3
+R1
+!s105 uart_rx_sv_unit
+S1
+R2
+w1524070082
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv
+L0 7
+R3
+r1
+!s85 0
+31
+Z16 !s108 1524870970.000000
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv|
+!s101 -O0
+!i113 1
+R4
+vuart_tx
+R0
+R15
+!i10b 1
+!s100 <@Jkb<5`SJ2WWi36bA1kD2
+IDlb`nHVlR_ZOCf5@eRe`U3
+R1
+!s105 uart_tx_sv_unit
+S1
+R2
+w1524846045
+8C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv
+FC:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv
+L0 2
+R3
+r1
+!s85 0
+31
+R16
+!s107 C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv|
+!s101 -O0
+!i113 1
+R4
