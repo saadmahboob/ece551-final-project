@@ -38,7 +38,6 @@ always
 
 endmodule
 
-
 module ram (
     input data,
     input [9:0] addr,
@@ -46,7 +45,7 @@ module ram (
     output q);
 
 // Declare the RAM variable
-reg ram[2**10-1:0];
+reg ram[(2**10)-1:0];
 
 // Variable to hold the registered read address
 logic [9:0] addr_reg;
