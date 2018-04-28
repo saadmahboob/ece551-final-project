@@ -1,76 +1,73 @@
-{C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_output_unit.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_output_unit.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module ram_output_unit
-
-Top level modules:
-	ram_output_unit
-
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/mac.sv} {1 {vlog -work work -sv -stats=none {C:\Users\shubh\Dropbox\Madison\Sophomore\Spring 2018\ECE 551\Final Project\mac.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module mac
-
-Top level modules:
-	mac
-
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/ram_hidden_unit.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module ram_hidden_unit
-
-Top level modules:
-	ram_hidden_unit
-
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core_tb.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn_core_tb.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+{Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/snn_core_tb.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/snn_core_tb.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module snn_core_tb
 -- Compiling module ram
 
 Top level modules:
 	snn_core_tb
 
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_act_func_lut.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_act_func_lut.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/rom_hidden_weight.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/rom_hidden_weight.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module rom_hidden_weight
+
+Top level modules:
+	rom_hidden_weight
+
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/rom_act_func_lut.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/rom_act_func_lut.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module rom_act_func_lut
 
 Top level modules:
 	rom_act_func_lut
 
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_output_weight.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_output_weight.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/rom_output_weight.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/rom_output_weight.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module rom_output_weight
 
 Top level modules:
 	rom_output_weight
 
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_rx.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/mac.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/mac.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module mac
+
+Top level modules:
+	mac
+
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/uart_rx.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/uart_rx.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module uart_rx
 
 Top level modules:
 	uart_rx
 
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/ram_hidden_unit.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/ram_hidden_unit.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module ram_hidden_unit
 
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/snn.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+Top level modules:
+	ram_hidden_unit
+
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/ram_output_unit.sv} {1 {vlog -work work -sv -stats=none {Z:\Documents\UW - Madison\Spring 2018\ECE551\ece551-final-project\ram_output_unit.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module ram_output_unit
+
+Top level modules:
+	ram_output_unit
+
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/snn.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/snn.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module snn
 -- Compiling module ram_input
 
 Top level modules:
 	snn
 
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/uart_tx.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+} {} {}} {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/uart_tx.sv} {1 {vlog -work work -sv -stats=none {Z:/Documents/UW - Madison/Spring 2018/ECE551/ece551-final-project/uart_tx.sv}
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module uart_tx
 
 Top level modules:
 	uart_tx
-
-} {} {}} {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_hidden_weight.sv} {1 {vlog -work work -sv -stats=none {C:/Users/shubh/Dropbox/Madison/Sophomore/Spring 2018/ECE 551/Final Project/rom_hidden_weight.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module rom_hidden_weight
-
-Top level modules:
-	rom_hidden_weight
 
 } {} {}}
