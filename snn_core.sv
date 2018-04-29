@@ -90,7 +90,11 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
           next_state = MAC1;
         end
 
-      MAC1:
+      MAC1: begin
+        if (addr_input_unit_max)
+            clr_n = 0;
+        else 
+            clr_n = 1;
         if (cnt_hidden_max)	begin //at middle of start bit
           next_state = MAC2;
         end
@@ -98,11 +102,16 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
           clr_n = 1;
           increment_input = 1;
           next_state = MAC1;
+        end
       end
 
       MAC2: begin
         we = 0;
         select_input = 1;
+        if (addr_ram_hidden_max)
+            clr_n = 0;
+        else 
+            clr_n = 1;
         if (cnt_output_max) begin	//middle of a bit which isn't the stop bit
           next_state = MAX;
         end
