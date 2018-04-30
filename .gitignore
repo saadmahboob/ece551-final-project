@@ -1,10 +1,11 @@
-*
-
+/work/
+*.mti
+*.mpf
+*.wlf
 !.gitignore
 
 !*.sv
-
 !README.txt
-
-!*.txt
-
+!/Files/input\ samples/*
+!/Files/math/*
+!/Files/memory\ initialization\ files/*
