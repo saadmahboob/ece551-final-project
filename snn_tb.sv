@@ -56,7 +56,8 @@ end
 
 endmodule
 
-module ram (
+module rom_tb (
+    input [9:0] data,
     input [9:0] addr,
     input clk,
     output logic q);
@@ -64,7 +65,7 @@ module ram (
     // Declare the ROM variable
     reg rom[2**10-1:0];
     initial
-    readmemh("./File/input\ samples/ram_input_contents_sample_9", rom);
+    readmemh("./File/input\ samples/ram_input_contents_sample_9.txt", rom);
 
     always @(posedge clk)
     begin
