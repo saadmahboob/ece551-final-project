@@ -66,6 +66,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
     digit <= 0;
   end
   else if (check_max)
+  @(posedge clk) 
     if (lut_out > max_prob) begin
       max_prob <= lut_out;
       digit <= digit_reg;
