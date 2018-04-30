@@ -1,6 +1,6 @@
 module snn_core_tb();
 
-logic clk, rst_n, rx_rdy, tx_start, strt, done, q_input, we;
+logic clk, rst_n, strt, done, q_input;
 logic [3:0] digit;
 logic [9:0] addr_reg;
 
@@ -51,7 +51,7 @@ reg ram[(2**10)-1:0];
 logic [9:0] addr_reg;
 
 initial begin
-    $readmemb("./Files/input\ samples/ram_input_contents_sample_6.txt", ram);
+    $readmemb("./Files/input\ samples/ram_input_contents_sample_9.txt", ram);
 
 end
 
