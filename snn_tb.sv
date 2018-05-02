@@ -1,11 +1,15 @@
 module snn_tb();
 
 logic clk, rst_n, tx_rx, start, tx_rdy;
-logic[3:0] digit_out;
+logic[7:0] digit_out;
+logic tx_out;
+logic data_rdy;
 logic[7:0] data_in, led;
+logic[9:0] addr;
 
-snn snn_DUT(.clk(clk), .sys_rst_n(rst_n), .led(led), .uart_tx(digit_out), .uart_rx(tx_rx));
+snn snn_DUT(.clk(clk), .sys_rst_n(rst_n), .led(led), .uart_tx(tx_out), .uart_rx(tx_rx));
 uart_tx tx_in(.clk(clk), .rst_n(rst_n), .tx_start(start), .tx_data(data_in), .tx(tx_rx), .tx_rdy(tx_rdy));
+uart_rx rx_out(.clk(clk), .rst_n(rst_n), .rx(tx_out), .rx_rdy(data_rdy), .rx_data(digit_out));
 rom_tb rom_tb(.addr(addr), .clk(clk), .q(q));
 
 task test_snn;
@@ -16,8 +20,10 @@ task test_snn;
         @(posedge clk)
         start = 1;
 
-        for (j = 0; j < 8; ++j)
-            data_in[j] = rom_tb.rom[8 * i + j];
+        for (j = 0; j < 8; ++j) begin
+          addr = 8 * i + j;
+          data_in[j] = rom_tb.rom[addr];
+        end
 
         @(posedge clk)
         data_in = 8'hFF;
@@ -25,9 +31,9 @@ task test_snn;
         @(posedge tx_rdy);
         end
 
-    @(posedge snn_DUT.uart_tx_out.tx_rdy)
+    @(posedge data_rdy)
 
-    if (digit_out == target_digit)
+    if (digit_out[3:0] == target_digit)
         $display("Test passed for target digit %d", target_digit);
     else
         $display("Test failed for target digit %d, output is %d", target_digit, digit_out);
@@ -64,7 +70,7 @@ module rom_tb (
     // Declare the ROM variable
     reg rom[2**10-1:0];
     initial
-    readmemh("./File/input\ samples/ram_input_contents_sample_6.txt", rom);
+    $readmemh("./File/input\ samples/ram_input_contents_sample_6.txt", rom);
 
     always @(posedge clk)
     begin
