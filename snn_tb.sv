@@ -57,7 +57,6 @@ end
 endmodule
 
 module rom_tb (
-    input [9:0] data,
     input [9:0] addr,
     input clk,
     output logic q);
