@@ -39,11 +39,11 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
   //MAC 1
   assign addr_input_unit_max = addr_input_unit == 10'h30f ? 1 : 0;
-  assign cnt_hidden_max_out = cnt_hidden == 6'h22 ? 1 : 0;
   assign cnt_hidden_max = cnt_hidden == 6'h20 ? 1 : 0;
 
   //MAC 2
   assign cnt_output_max =  (select_input) ? ((cnt_output == 4'ha) ? 1 : 0) : 0;
+  assign cnt_hidden_max_out = cnt_hidden == 6'h22 ? 1 : 0;
 
   assign a = select_input ? ram_hidden_data : q_extended;
   assign b = select_input ? output_weight_q : hidden_weight_q;
@@ -121,7 +121,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
       MAC2: begin
         select_input = 1;
         
-        if (digit_reg == 4'h9) begin
+        if (digit_reg == 4'ha) begin
             next_state = DONE;
         end
         else begin
@@ -196,7 +196,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   //digit of max prob needs to be one clock cycle behind input address
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
-      digit_reg <= 4'hf;
+      digit_reg <= 4'h0;
     else 
       if (digit_clr)
         digit_reg <= 4'h0;
