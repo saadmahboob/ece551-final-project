@@ -51,7 +51,7 @@ reg ram[(2**10)-1:0];
 logic [9:0] addr_reg;
 
 initial begin
-    $readmemb("./Files/input\ samples/ram_input_contents_sample_4.txt", ram);
+    $readmemb("./Files/input\ samples/ram_input_contents_sample_0.txt", ram);
 
 end
 
