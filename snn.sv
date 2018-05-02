@@ -129,7 +129,7 @@ module ram_input (
 	input we, clk,
 	output q);
 	// Declare the RAM variable
-	reg []ram[(2**10)-1:0];
+	reg [7:0] ram[2**10-1:0];
 	// Variable to hold the registered read address
 	reg [9:0] addr_reg;
 	initial
