@@ -23,7 +23,7 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 
 	// Declare wires below
 	logic rx_rdy, tx_rdy, snn_done, q_input, ram_in;
-	logic[7:0] rx_data, tx_data;
+	logic[7:0] rx_data, tx_data, rx;
 	logic[3:0] digit;
 	logic[9:0] addr_input_unit, write_addr, read_addr;
 
@@ -34,12 +34,13 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	assign addr_input_unit = write_enable ? write_addr : read_addr;
 
 	uart_rx uart_rx_in(.clk(clk), .rst_n(sys_rst_n), .rx(uart_rx_synch), .rx_data(rx_data), .rx_rdy(rx_rdy));
-	ram_input test_data(.data(rx_data[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
+	ram_input test_data(.data(rx[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
 	//logic between test_data and core: q_input. addr_input_unit
 	snn_core core(.start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_done), .clk(clk), .rst_n(rst_n));
 	//logic between core and tx_out: snn_done, digit
 	uart_tx uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_done), .tx_data(tx_data), .tx(uart_tx), .tx_rdy());
 
+//	assign rx = rx_data;
 	// Double flop RX for meta-stability reasons
 	always_ff @(posedge clk, negedge rst_n)
 		if (!rst_n) begin
@@ -55,10 +56,11 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 		if (!rst_n) begin
 			shift_cnt <= 3'h0;
 			write_addr <= 10'h0;
-			rx_data <= 8'h0;
+			rx <= rx_data;
+		//	rx_data <= 8'h0;
 		end
 		else if (shift) begin
-			rx_data <= {1'b0, rx_data[7:1]};
+			rx <= {1'b0, rx_data[7:1]};
 			shift_cnt <= shift_cnt + 1;
 			write_addr <= write_addr + 1;
 		end
@@ -127,11 +129,11 @@ module ram_input (
 	input we, clk,
 	output q);
 	// Declare the RAM variable
-	logic ram[2**9:0];
+	reg []ram[(2**10)-1:0];
 	// Variable to hold the registered read address
 	reg [9:0] addr_reg;
 	initial
-		$readmemh("ram_input_contents.txt", ram);
+		$readmemh("./Files/memory\ initialization\ files/ram_input_contents.txt", ram);
 
 	always @ (posedge clk) begin
 	if (we) // Write
