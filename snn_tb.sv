@@ -65,7 +65,7 @@ module rom_tb (
     // Declare the ROM variable
     reg rom[2**10-1:0];
     initial
-    readmemh("./File/input\ samples/ram_input_contents_sample_9.txt", rom);
+    readmemh("./File/input\ samples/ram_input_contents_sample_6.txt", rom);
 
     always @(posedge clk)
     begin
