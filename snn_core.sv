@@ -32,13 +32,14 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   rom_output_weight    output_weight(.addr({cnt_output[3:0], cnt_hidden[4:0]}), .clk(clk), .q(output_weight_q));
   ram_hidden_unit      hidden_unit(.data(lut_out), .addr(cnt_hidden [4:0]), .clk(clk), .we(write_hidden), .q(ram_hidden_data));
   rom_act_func_lut     act_func_lut(.addr(addr_LUT + 11'h400), .clk(clk), .q(lut_out));
-  mac                  mac(.clk(clk), .a(a), .b(b), .acc(acc), .clr_n(mac_clr_n), .rst_n(rst_n));
+  mac                  mac(.clk(clk), .a(a), .b(b), .acc(acc), .clr_n(mac_clr_n), .rst_n(rst_n), .addr_LUT(addr_LUT));
 //  ram_output_unit      output_unit(.data(lut_out), .addr(output_unit_addr), .clk(clk), .we(write_out), .q(digit_prob));
 
   assign q_extended = (q_input) ? 8'h7F : 8'h00;
 
   //MAC 1
   assign addr_input_unit_max = addr_input_unit == 10'h30f ? 1 : 0;
+  assign cnt_hidden_max_out = cnt_hidden == 6'h22 ? 1 : 0;
   assign cnt_hidden_max = cnt_hidden == 6'h20 ? 1 : 0;
 
   //MAC 2
@@ -47,14 +48,14 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   assign a = select_input ? ram_hidden_data : q_extended;
   assign b = select_input ? output_weight_q : hidden_weight_q;
 
-  always_ff @(posedge clk) begin
-    if(acc[25]==0 && |acc[24:17] == 1)
-      addr_LUT = 11'h3ff;
-    else if(acc[25]==1 && &acc[24:17] == 0)
-      addr_LUT = 11'h400;
-    else
-      addr_LUT = acc[17:7];
-  end
+  // always_ff @(posedge clk) begin
+  //   if(acc[25]==0 && |acc[24:17] == 1)
+  //     addr_LUT = 11'h3ff;
+  //   else if(acc[25]==1 && &acc[24:17] == 0)
+  //     addr_LUT = 11'h400;
+  //   else
+  //     addr_LUT = acc[17:7];
+  // end
 
 
  always_ff @(posedge clk, negedge rst_n)
@@ -130,19 +131,12 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
         end
         if (cnt_hidden == 0) 
             mac_clr_n = 0;
-        else if (!cnt_hidden_max)
+        else if (!cnt_hidden_max_out)
             mac_clr_n = 1;
         else begin
-          //next_state = TEMP;
           check_max = 1;
         end
       end
-
-      // TEMP: begin
-      //   select_input = 1;
-      //   check_max = 1;
-      //   next_state = MAC2;
-      // end
 
       // MAX: begin
       //   check_max = 1;
@@ -181,7 +175,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
     else
       if (hidden_clr)
         cnt_hidden <= 6'b0;
-      else if (cnt_hidden_max)
+      else if (cnt_hidden_max_out)
         cnt_hidden <=6'b0;
       else if (addr_input_unit_max)
         cnt_hidden <= cnt_hidden + 1;
