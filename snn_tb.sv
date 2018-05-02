@@ -6,7 +6,7 @@ logic[7:0] data_in, led;
 
 snn snn_DUT(.clk(clk), .sys_rst_n(rst_n), .led(led), .uart_tx(digit_out), .uart_rx(tx_rx));
 uart_tx tx_in(.clk(clk), .rst_n(rst_n), .tx_start(start), .tx_data(data_in), .tx(tx_rx), .tx_rdy(tx_rdy));
-rom rom_tb(.addr(addr), .clk(clk), .q(q));
+rom_tb rom_tb(.addr(addr), .clk(clk), .q(q));
 
 task test_snn;
     input logic[3:0] target_digit;
@@ -29,12 +29,12 @@ task test_snn;
 
     if (digit_out == target_digit)
         $display("Test passed for target digit %d", target_digit);
-    else 
+    else
         $display("Test failed for target digit %d, output is %d", target_digit, digit_out);
-    
+
     if (led == target_led)
         $display("Test passed for target LED %b, output is %b,", target_led, led);
-    else 
+    else
         $display("Test passed for target LED %b, output is %b,", target_led, led);
 endtask
 
@@ -42,7 +42,7 @@ endtask
 always
     #5 clk = ~clk;
 
-initial begin 
+initial begin
     rst_n = 0;
     clk = 0;
     start = 0;
