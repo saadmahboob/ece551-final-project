@@ -37,7 +37,7 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	ram_input test_data(.data(rx[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
 	//logic between test_data and core: q_input. addr_input_unit
 	snn_core core(.start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_done), .clk(clk), .rst_n(rst_n));
-	//logic between core and tx_out: snn_done, digit
+	//logic between core and tx_out: snn_done, digitq_inpu
 	uart_tx uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_done), .tx_data(tx_data), .tx(uart_tx), .tx_rdy());
 
 //	assign rx = rx_data;
@@ -56,11 +56,10 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 		if (!rst_n) begin
 			shift_cnt <= 3'h0;
 			write_addr <= 10'h0;
-			rx <= rx_data;
 		//	rx_data <= 8'h0;
 		end
+
 		else if (shift) begin
-			rx <= {1'b0, rx_data[7:1]};
 			shift_cnt <= shift_cnt + 1;
 			write_addr <= write_addr + 1;
 		end
@@ -68,7 +67,17 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 			shift_cnt <= 3'h0;
 		end
 
-	assign max_shift = (shift_cnt == 3'h7) ? 1 : 0;
+		always_ff @(posedge clk, negedge rst_n)
+			if (!rst_n)
+				rx <= 0;
+			else if (rx_rdy)
+				rx <= rx_data;
+			else if (shift)
+				rx <= {1'b0, rx[7:1]};
+
+
+
+	assign max_shift = (shift_cnt == 3'h6) ? 1 : 0;
 	assign max_addr = (write_addr == 10'h310) ? 1: 0;
 	assign tx_data = {4'h0, digit[3:0]};
 
