@@ -77,8 +77,8 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 
 
 
-	assign max_shift = (shift_cnt == 3'h6) ? 1 : 0;
-	assign max_addr = (write_addr == 10'h310) ? 1: 0;
+	assign max_shift = (shift_cnt == 3'h7) ? 1 : 0;
+	assign max_addr = (write_addr == 10'h30f) ? 1: 0;
 	assign tx_data = {4'h0, digit[3:0]};
 
 
@@ -86,7 +86,7 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 	// For UART_RX, use "uart_rx_synch", which is synchronized, not "uart_rx".
 
 	//control FSM
-	typedef enum reg[1:0] {IDLE, LOAD, READ} state_t;
+	typedef enum reg[1:0] {IDLE, LOAD, TEMP, READ} state_t;
 	state_t state, next_state;
 
 	always_ff @(posedge clk, negedge rst_n)
@@ -105,7 +105,7 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 			IDLE:
 				if(rx_rdy) begin
 					next_state = LOAD;
-					write_enable = 1;
+					//write_enable = 1;
 				end
 			LOAD: begin
 				shift = 1;
@@ -114,7 +114,10 @@ module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 					next_state = LOAD;
 				else if (max_addr)
 					next_state = READ;
+				else if (max_shift)
+					next_state = TEMP;
 			end
+			
 			READ: begin
 				snn_start = 1;
 				if (~snn_done)

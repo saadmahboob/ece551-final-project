@@ -83,7 +83,7 @@ always_ff @(posedge clk, negedge rst_n)
 //shift register
 always_ff @(posedge clk, negedge rst_n)
   if (!rst_n)
-    shift_reg <= 0;
+    shift_reg <= 12'b1;
   else
     if (load)
       shift_reg <= {1'b1, tx_data, 1'b0};

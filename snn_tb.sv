@@ -47,7 +47,7 @@ endtask
 
 
 always
-    #1 clk = ~clk;
+    #10 clk = ~clk;
 
 initial begin
     rst_n = 0;
@@ -58,7 +58,7 @@ initial begin
 
     #10;
     rst_n = 1;
-    test_snn(4'h6, 8'h09);
+    test_snn(4'h0, 8'h09);
 end
 
 endmodule
@@ -71,7 +71,7 @@ module rom_tb (
     // Declare the ROM variable
     reg rom[2**10-1:0];
     initial
-        $readmemh("./Files/input\ samples/ram_input_contents_sample_6.txt", rom);
+        $readmemh("./Files/input\ samples/ram_input_contents_sample_0.txt", rom);
 
     always @(posedge clk) begin
         q <= rom[addr];
