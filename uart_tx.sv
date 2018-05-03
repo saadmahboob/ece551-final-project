@@ -29,20 +29,22 @@ always_comb begin
   shift = 0;
   load = 0;
   clr = 0;
-  tx_rdy = 0;
+  tx_rdy = 1;
   //tx = 0;
   nxt_state = IDLE;
 
   case(state)
-    IDLE:
+    IDLE: begin
       if (tx_start) begin
         load = 1;
         nxt_state = TX;
-    end
+      end
     else
       clr = 1;
+    end
 
-    TX:
+    TX: begin
+      tx_rdy = 0;
       if (baud_full)
         if (!bit_full) begin
           shift = 1;
@@ -51,14 +53,14 @@ always_comb begin
 			 //tx = shift_reg[0];
         end
         else begin
-          tx_rdy = 1;
 			    nxt_state = IDLE;
 			 //tx = shift_reg[0];
 			end
       else begin
         nxt_state = TX;
 		  //tx = shift_reg[0];
-		end
+    end
+  end
   endcase
 end
 

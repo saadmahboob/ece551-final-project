@@ -1,18 +1,18 @@
 module snn_tb();
 
-localparam BAUD_PERIOD = 52100;
+//localparam BAUD_PERIOD = 52100;
 
 logic clk, rst_n, tx_rx;
 logic[7:0] digit_out;
 logic snn_out;
-logic data_rdy, byte_rdy;
+logic data_rdy, byte_rdy, get_byte;
 logic[7:0] new_byte, led;
 logic[9:0] rom_addr;
 
 snn snn_DUT(.clk(clk), .sys_rst_n(rst_n), .led(led), .uart_tx(snn_out), .uart_rx(tx_rx));
 uart_rx rx_to_PC(.clk(clk), .rst_n(rst_n), .rx(snn_out), .rx_rdy(data_rdy), .rx_data(digit_out));
 rom_tb rom_tb(.addr(rom_addr), .clk(clk), .q(q));
-uart_tx tx_to_snn(.clk(clk), .rst_n(rst_n), .tx_start(byte_rdy), .tx_data(new_byte), .tx(tx_rx), .tx_rdy());
+uart_tx tx_to_snn(.clk(clk), .rst_n(rst_n), .tx_start(byte_rdy), .tx_data(new_byte), .tx(tx_rx), .tx_rdy(get_byte));
 
 task test_snn;
     input logic[3:0] target_digit;
@@ -31,11 +31,16 @@ task test_snn;
             
             @(posedge clk)
             byte_rdy = 0;
+
+            @(posedge get_byte)
+            rom_addr = 0;
+
+           // @(posedge get_byte);
                 
                 //@(posedge clk)              //wait a clock cycle for data to be valid
                 //tx_rx = q;                  //send data
                 //#(BAUD_PERIOD - 1);           //wait a baud period
-            end
+        end
             
             //tx_rx <= 1'b1;                     //send stop bit
             //#BAUD_PERIOD;                   //wait baud period before going to next data
@@ -61,7 +66,6 @@ always
 initial begin
     rst_n = 0;
     clk = 0;
-    tx_rx = 1;
     rom_addr = 10'h0;
     #10;
     rst_n = 1;
@@ -78,7 +82,7 @@ module rom_tb (
     // Declare the ROM variable
     reg rom[2**10-1:0];
     initial
-        $readmemh("./Files/input\ samples/ram_input_contents_sample_0.txt", rom);
+        $readmemh("./Files/input\ samples/ram_input_contents_sample_2.txt", rom);
 
     always @(posedge clk) begin
         q <= rom[addr];
