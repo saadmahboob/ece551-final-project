@@ -9,13 +9,14 @@ module ram_hidden_unit (
   reg [4:0] addr_reg;
 
   initial
-  $readmemh("./Files/memory\ initialization\ files/ram_hidden_contents.txt", ram);
+    $readmemh("./Files/memory\ initialization\ files/ram_hidden_contents.txt", ram);
 
-  always @ (posedge clk)
-  begin
-  if (we) // Write
-  ram[addr] <= data;
-  addr_reg <= addr;
-  end
+  always @ (posedge clk) begin
+    if (we) // Write
+      ram[addr] <= data;
+    addr_reg <= addr;
+    end
+
   assign q = ram[addr_reg];
-  endmodule
+  
+endmodule
