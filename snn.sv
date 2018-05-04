@@ -36,12 +36,11 @@
 	uart_rx 		uart_rx_in(.clk(clk), .rst_n(sys_rst_n), .rx(uart_rx_synch), .rx_data(rx_data), .rx_rdy(rx_rdy));
 	ram_input 		test_data(.clk(clk), .we(write_enable), .data(rx[0]), .addr(addr_input_unit), .q(q_input));
 	snn_core 		core(.clk(clk), .rst_n(rst_n), .start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_core_done));
-	uart_tx 		uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_core_done), .tx_data(tx_data), .tx(uart_tx), .tx_rdy());
+	uart_tx 		uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_core_done), .tx_data(led), .tx(uart_tx), .tx_rdy());
 
 	assign addr_input_unit = write_enable ? write_addr : read_addr;
 	assign max_shift = (shift_cnt == 3'h7) ? 1 : 0;
 	assign max_addr = (write_addr == 10'h30f) ? 1: 0;
-	assign tx_data = {4'h0, digit[3:0]};
 
 	// Double flop RX for meta-stability
 	always_ff @(posedge clk, negedge rst_n)
@@ -132,7 +131,7 @@
 	end
 
 	// LED
-	assign led = tx_data;
+	assign led = {4'h3, digit[3:0]};
 
 endmodule
 
