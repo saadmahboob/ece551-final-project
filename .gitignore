@@ -2,6 +2,7 @@
 *.mti
 *.mpf
 *.wlf
+*wlft0935km
 !.gitignore
 
 !*.sv

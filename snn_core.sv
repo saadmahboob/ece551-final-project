@@ -33,12 +33,11 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   ram_hidden_unit      hidden_unit(.data(lut_out), .addr(cnt_hidden [4:0]), .clk(clk), .we(write_hidden), .q(ram_hidden_data));
   rom_act_func_lut     act_func_lut(.addr(addr_LUT + 11'h400), .clk(clk), .q(lut_out));
   mac                  mac(.clk(clk), .a(a), .b(b), .acc(acc), .clr_n(mac_clr_n), .rst_n(rst_n), .addr_LUT(addr_LUT));
-//  ram_output_unit      output_unit(.data(lut_out), .addr(output_unit_addr), .clk(clk), .we(write_out), .q(digit_prob));
 
   assign q_extended = (q_input) ? 8'h7F : 8'h00;
 
   //MAC 1
-  assign addr_input_unit_max = addr_input_unit == 10'h30f ? 1 : 0;
+  assign addr_input_unit_max = addr_input_unit == 10'h2ec ? 1 : 0;
   assign cnt_hidden_max = cnt_hidden == 6'h20 ? 1 : 0;
 
   //MAC 2
@@ -47,15 +46,6 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
   assign a = select_input ? ram_hidden_data : q_extended;
   assign b = select_input ? output_weight_q : hidden_weight_q;
-
-  // always_ff @(posedge clk) begin
-  //   if(acc[25]==0 && |acc[24:17] == 1)
-  //     addr_LUT = 11'h3ff;
-  //   else if(acc[25]==1 && &acc[24:17] == 0)
-  //     addr_LUT = 11'h400;
-  //   else
-  //     addr_LUT = acc[17:7];
-  // end
 
 
  always_ff @(posedge clk, negedge rst_n)
@@ -68,10 +58,6 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
       max_prob <= lut_out;
       digit <= digit_reg;
     end
-
-  // assign max_prob = (check_max) ? ((max_prob > digit_prob) ? max_prob : digit_prob) : 0;
-
-  // assign digit = (check_max) ? ((max_prob < digit_prob) ? output_unit_addr : digit) : 0;
 
   // FSM
   always_ff @(posedge clk, negedge rst_n)
@@ -138,17 +124,6 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
         end
       end
 
-      // MAX: begin
-      //   check_max = 1;
-      //   if (digit_max) begin
-      //     next_state = DONE;
-      //   end
-      //   else begin
-      //     increment_digit = 1;
-      //     next_state = MAX;
-      //   end
-      // end
-
       DONE: begin
         check_max = 0;
         done = 1;
@@ -160,10 +135,10 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   //address input unit counter
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
-      addr_input_unit <= 10'b0;
+      addr_input_unit <= 10'h23;
     else
       if (addr_input_unit_max)
-        addr_input_unit <= 10'b0;
+        addr_input_unit <= 10'h23;
       else
         if (inc_input_addr)
           addr_input_unit <= addr_input_unit+1;
@@ -203,37 +178,5 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
       else
         if (check_max)
           digit_reg <= digit_reg + 1;
-  // //address ram hidden counter
-  // always_ff @(posedge clk, negedge rst_n)
-  //   if (!rst_n)
-  //     cnt_hidden <= 5'b0;
-  //   else
-  //     //if (addr_ram_hidden_max)
-  //     //  cnt_hidden <= 5'b0;
-  //     //else
-  //     if (increment_output)
-  //       cnt_hidden <= cnt_hidden + 1;
-  //     else if (addr_ram_hidden_max)
-  //       cnt_hidden <= 0;
-  //     else if (addr_input_unit_max)
-  //       cnt_hidden <= cnt_hidden + 1;
-
-  // //output address counter
-  // always_ff @(posedge clk, negedge rst_n)
-  //   if (!rst_n) begin
-  //     output_unit_addr <= 4'b0;
-  //   end
-  //   else begin
-  //     if (digit_max) begin
-  //       if (write_out || check_max)
-  //         output_unit_addr <= 4'b0;
-  //     end
-
-  //     else if (increment_digit)
-  //         output_unit_addr <= output_unit_addr + 1;
-  //     else if (addr_ram_hidden_max)
-  //         output_unit_addr <= output_unit_addr + 1;
-  //   end
-
 
 endmodule

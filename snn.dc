@@ -1,19 +1,12 @@
 # Read the verilog file
-read_file - format verilog { ./mac.sv ./ram.sv ./ram_hiddent_unit.sv \
-				   ./ram_output_unit.sv ./rom.sv ./rom_act_func_lut.sv \
-				   ./rom_hidden_weight.sv ./rom_output_weight.sv \
-				   ./rst_synch.sv ./snn.sv ./snn_core.sv ./uart_rx.sv ./ uart_tx.sv }
+read_file -format sverilog { mac.sv ram_hidden_unit.sv ram_output.sv rom_act_func_lut.sv rom_hidden_weight.sv rom_output_weight.sv rst_synch.sv snn.sv uart_rx.sv uart_tx.sv }
 
 # Set top level design
 set current_design snn
 
-##### Set constraints ####
-# Set wireload model and transition time
-set_wire_load_model -name TSMC32K_Lowk_Conservative -lbrary tcbn401pbwptc
-set_max_transisiton 0.1 [current_design]
 
 # Create clock pin with period of 40ns and set uncertainty to 0.1ns
-create_clock -name "clk" -period 40 -name
+create_clock -name "clk" -period 40
 set_clock_uncertainty 0.10 clk
 set_dont_touch_network [find port clk]
 
@@ -26,6 +19,11 @@ set_drive 0.1 rst_n
 # Set output delay of 0.5ns and load of 0.1pf
 set_output_delay 0.5 [all_outputs]
 set_load 0.1 [all_outputs]
+
+##### Set constraints ####
+# Set wireload model and transition time
+set_wire_load_model -name TSMC32K_Lowk_Conservative -lbrary tcbn401pbwptc
+set_max_transiton 0.1 [current_design]
 
 # Set minimum max area
 set_max_area 0
