@@ -11,24 +11,19 @@
  module snn(clk, sys_rst_n, led, uart_tx, uart_rx);
 
 	input clk;			      		// 50MHz clock
-	input sys_rst_n;					// Unsynched reset from push button. Needs to be synchronized.
-	output logic [7:0] led;		// Drives LEDs of DE0 nano board
-
+	input sys_rst_n;					// unsynchronized reset from push button. Needs to be synchronized.
 	input uart_rx;
+
+	output logic [7:0] led;		// drives LEDs of DE0 nano board
 	output uart_tx;
 
-	logic rst_n;				 			// Synchronized active low reset
-
+	logic rst_n;				 			// synchronized active low reset
 	logic uart_rx_ff, uart_rx_synch;
 
-	/*
-	 * Reset synchronizer
-	 */
+	// Reset synchronizer
 	rst_synch i_rst_synch(.clk(clk), .sys_rst_n(sys_rst_n), .rst_n(rst_n));
 
-	/*
-	 * UART
-	 */
+	// UART
 	logic rx_rdy, snn_core_done, q_input;
 	logic[7:0] rx_data, tx_data, rx;
 	logic[3:0] digit;
@@ -36,16 +31,19 @@
 
 	//control FSM wires
 	logic snn_start, write_enable, shift, inc_addr;
-	logic [3:0]shift_cnt;
-
-	assign addr_input_unit = write_enable ? write_addr : read_addr;
+	logic[3:0] shift_cnt;
 
 	uart_rx 		uart_rx_in(.clk(clk), .rst_n(sys_rst_n), .rx(uart_rx_synch), .rx_data(rx_data), .rx_rdy(rx_rdy));
 	ram_input 	test_data(.data(rx[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
 	snn_core 		core(.start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_core_done), .clk(clk), .rst_n(rst_n));
 	uart_tx 		uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_core_done), .tx_data(tx_data), .tx(uart_tx), .tx_rdy());
 
-	// Double flop RX for meta-stability reasons
+	assign addr_input_unit = write_enable ? write_addr : read_addr;
+	assign max_shift = (shift_cnt == 3'h7) ? 1 : 0;
+	assign max_addr = (write_addr == 10'h30f) ? 1: 0;
+	assign tx_data = {4'h0, digit[3:0]};
+
+	// Double flop RX for meta-stability
 	always_ff @(posedge clk, negedge rst_n)
 		if (!rst_n)
 			uart_rx_ff <= 1'b1;
@@ -58,6 +56,7 @@
 	 	else
 	  	uart_rx_synch <= uart_rx_ff;
 
+	// counter to keep track of number of bits shifted
 	always_ff @(posedge clk, negedge rst_n)
 		if (!rst_n)
 			shift_cnt <= 3'h0;
@@ -66,29 +65,25 @@
 		else
 			shift_cnt <= 3'h0;
 
+	// address assigned to addr_input_unit
 	always_ff @(posedge clk, negedge rst_n)
 		if (!rst_n)
+			write_addr <= 10'h0;
+		else if (max_addr)
 			write_addr <= 10'h0;
 		else if (inc_addr)
 			write_addr <= write_addr + 1;
 
 	always_ff @(posedge clk, negedge rst_n)
 		if (!rst_n)
-			rx <= 0;
+			rx <= 1'b0;
 		else if (rx_rdy)
 			rx <= rx_data;
 		else if (shift)
 			rx <= {1'b0, rx[7:1]};
 
-	assign max_shift = (shift_cnt == 3'h7) ? 1 : 0;
-	assign max_addr = (write_addr == 10'h30f) ? 1: 0;
-	assign tx_data = {4'h0, digit[3:0]};
-
-	// Instantiate UART_RX and UART_TX and connect them below
-	// For UART_RX, use "uart_rx_synch", which is synchronized, not "uart_rx".
-
 	//control FSM
-	typedef enum reg[1:0] {IDLE, LOAD, TEMP, READ} state_t;
+	typedef enum reg[1:0] {IDLE, LOAD, READ} state_t;
 	state_t state, next_state;
 
 	always_ff @(posedge clk, negedge rst_n)
@@ -131,13 +126,14 @@
 			endcase
 	end
 
-	/*
-	 * LED
-	 */
+	// LED
 	assign led = tx_data;
 
 endmodule
 
+/*
+ * Module name	: ram_input
+ */
 module ram_input (
 	input data,
 	input [9:0] addr,
