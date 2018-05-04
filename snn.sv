@@ -25,17 +25,17 @@
 
 	// UART
 	logic rx_rdy, snn_core_done, q_input;
-	logic[7:0] rx_data, tx_data, rx;
-	logic[3:0] digit;
-	logic[9:0] addr_input_unit, write_addr, read_addr;
+	logic [7:0] rx_data, tx_data, rx;
+	logic [3:0] digit;
+	logic [9:0] addr_input_unit, write_addr, read_addr;
 
 	//control FSM wires
 	logic snn_start, write_enable, shift, inc_addr;
-	logic[3:0] shift_cnt;
+	logic [3:0] shift_cnt;
 
 	uart_rx 		uart_rx_in(.clk(clk), .rst_n(sys_rst_n), .rx(uart_rx_synch), .rx_data(rx_data), .rx_rdy(rx_rdy));
-	ram_input 	test_data(.data(rx[0]), .addr(addr_input_unit), .we(write_enable), .clk(clk), .q(q_input));
-	snn_core 		core(.start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_core_done), .clk(clk), .rst_n(rst_n));
+	ram_input 		test_data(.clk(clk), .we(write_enable), .data(rx[0]), .addr(addr_input_unit), .q(q_input));
+	snn_core 		core(.clk(clk), .rst_n(rst_n) .start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_core_done));
 	uart_tx 		uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_core_done), .tx_data(tx_data), .tx(uart_tx), .tx_rdy());
 
 	assign addr_input_unit = write_enable ? write_addr : read_addr;
@@ -101,6 +101,7 @@
 		inc_addr = 0;
 
 		case(state)
+			//stay in IDLE until first 8 bits are ready from uart_rx
 			IDLE:
 				if(rx_rdy)
 					next_state = LOAD;
