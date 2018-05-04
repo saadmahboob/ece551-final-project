@@ -1,6 +1,6 @@
 module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
-  typedef enum reg[2:0] {IDLE, MAC1, TEMP, MAC2, DONE} state;
+  typedef enum reg[1:0] {IDLE, MAC1, MAC2, DONE} state;
   state curr_state, next_state;
 
   output logic [9:0] addr_input_unit;
@@ -24,7 +24,8 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   logic [10:0]  addr_LUT;
 
   //Max stuff
-  logic [7:0]   output_weight_q, max_prob, check_max;
+  logic [7:0]   output_weight_q, max_prob;
+  logic check_max;
   logic [3:0]   digit_reg;
   logic [3:0]   cnt_output;
 
@@ -49,21 +50,23 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
 
  always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n) begin
+  if (!rst_n)
     max_prob <= 0;
-    digit <= 0;
-  end
   else if (check_max)
-    if (lut_out > max_prob) begin
+    if (lut_out > max_prob)
       max_prob <= lut_out;
-      digit <= digit_reg;
-    end
+
+  always_ff @(posedge clk, negedge rst_n)
+   if (!rst_n)
+     digit <= 0;
+   else if (check_max)
+     if (lut_out > max_prob)
+       digit <= digit_reg;
 
   // FSM
   always_ff @(posedge clk, negedge rst_n)
-    if (!rst_n) begin
+    if (!rst_n)
       curr_state <= IDLE;
-    end
     else
       curr_state <= next_state;
 
@@ -84,15 +87,15 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
     case (curr_state)
       IDLE:
-        if (start) begin					//start bit detected
+        if (start)    					//start bit detected
           next_state = MAC1;
-        end
 
       MAC1: begin
         if (!addr_input_unit_max)
           mac_clr_n = 1;
         else
           write_hidden = 1;
+
         if (cnt_hidden_max)	begin
           hidden_clr = 1;
           output_clr = 1;
@@ -106,22 +109,21 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
       MAC2: begin
         select_input = 1;
-        
-        if (digit_reg == 4'ha) begin
+
+        if (digit_reg == 4'ha)
             next_state = DONE;
-        end
         else begin
           addr_input_unit_clr = 1;
           increment_output = 1;
           next_state = MAC2;
         end
-        if (cnt_hidden == 0) 
+
+        if (cnt_hidden == 0)
             mac_clr_n = 0;
         else if (!cnt_hidden_max_out)
             mac_clr_n = 1;
-        else begin
+        else
           check_max = 1;
-        end
       end
 
       DONE: begin
@@ -129,6 +131,10 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
         done = 1;
         next_state = IDLE;
       end
+
+      default:
+        next_state = IDLE;
+
     endcase
   end
 
@@ -162,17 +168,17 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
     if (!rst_n)
       cnt_output <= 4'h0;
     else
-      if (output_clr) 
+      if (output_clr)
         cnt_output <= 4'h0;
-      else 
+      else
         if (cnt_hidden_max)
           cnt_output <= cnt_output + 1;
-  
+
   //digit of max prob needs to be one clock cycle behind input address
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
       digit_reg <= 4'h0;
-    else 
+    else
       if (digit_clr)
         digit_reg <= 4'h0;
       else

@@ -19,22 +19,13 @@ module mac(clk, rst_n, a, b, clr_n, acc, addr_LUT);
 	assign add = mult_ext + acc;		//sign extends inputs before addition to check for underflow/overflow
 	assign acc_next = clr_n ? add : 26'h0;
 
-	assign addr_LUT = (acc[25]==0 && |acc[24:17] == 1) ? 11'h3ff : 
+	assign addr_LUT = (acc[25]==0 && |acc[24:17] == 1) ? 11'h3ff :
 					  (acc[25]==1 && &acc[24:17] == 0) ? 11'h400 : acc[17:7];
 
-	always @(posedge clk, negedge rst_n) begin
-		if (!rst_n) begin
+	always @(posedge clk, negedge rst_n)
+		if (!rst_n)
 			acc <= 26'h0;
-		end
-		else 
+		else
 			acc <= acc_next;
-		// 	if(acc[25]==0 && |acc[24:17] == 1)
-		// 	addr_LUT <= 11'h3ff;
-		// 	else if(acc[25]==1 && &acc[24:17] == 0)
-		// 	addr_LUT <= 11'h400;
-		// 	else
-		// 	addr_LUT <= acc[17:7];
-		// end
-	end
 
 endmodule

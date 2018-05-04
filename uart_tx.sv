@@ -1,4 +1,3 @@
-
 module uart_tx(clk, rst_n, tx_start, tx_data, tx, tx_rdy);
 
   typedef enum reg [1:0] {IDLE, TX} state_t;
@@ -19,78 +18,72 @@ module uart_tx(clk, rst_n, tx_start, tx_data, tx, tx_rdy);
   assign tx = shift_reg[0];
 
 //state machine
-always_ff @(posedge clk, negedge rst_n)
-    if (!rst_n)
-        state <= IDLE;
-    else
-        state <= nxt_state;
+  always_ff @(posedge clk, negedge rst_n)
+      if (!rst_n)
+          state <= IDLE;
+      else
+          state <= nxt_state;
 
-always_comb begin
-  shift = 0;
-  load = 0;
-  clr = 0;
-  tx_rdy = 1;
-  //tx = 0;
-  nxt_state = IDLE;
+  always_comb begin
+    shift = 0;
+    load = 0;
+    clr = 0;
+    tx_rdy = 1;
+    nxt_state = IDLE;
 
-  case(state)
-    IDLE: begin
-      if (tx_start) begin
-        load = 1;
-        nxt_state = TX;
-      end
-    else
-      clr = 1;
-    end
-
-    TX: begin
-      tx_rdy = 0;
-      if (baud_full)
-        if (!bit_full) begin
-          shift = 1;
-          clr = 1;
+    case(state)
+      IDLE: begin
+        if (tx_start) begin
+          load = 1;
           nxt_state = TX;
-			 //tx = shift_reg[0];
         end
-        else begin
-			    nxt_state = IDLE;
-			 //tx = shift_reg[0];
-			end
-      else begin
-        nxt_state = TX;
-		  //tx = shift_reg[0];
-    end
+        else
+          clr = 1;
+      end
+
+      TX: begin
+        tx_rdy = 0;
+        if (baud_full)
+          if (!bit_full) begin
+            shift = 1;
+            clr = 1;
+            nxt_state = TX;
+          end
+          else
+  			    nxt_state = IDLE;
+        else
+          nxt_state = TX;
+      end
+    endcase
   end
-  endcase
-end
 
-//baud counter
-always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n)
-    baud <= 12'b0;
-  else
-    baud <= clr ? 12'b0 : baud + 1;
+  //baud counter
+  always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
+      baud <= 12'b0;
+    else
+      baud <= clr ? 12'b0 : baud + 1;
 
-//bit counter
-always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n)
-    bit_cnt <= 4'b0;
-  else
-    if (load)
+  //bit counter
+  always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
       bit_cnt <= 4'b0;
     else
-      if (shift)
-        bit_cnt <= bit_cnt + 1;
+      if (load)
+        bit_cnt <= 4'b0;
+      else
+        if (shift)
+          bit_cnt <= bit_cnt + 1;
 
-//shift register
-always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n)
-    shift_reg <= 12'b1;
-  else
-    if (load)
-      shift_reg <= {1'b1, tx_data, 1'b0};
+  //shift register
+  always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
+      shift_reg <= 12'b1;
     else
-      if (shift)
-        shift_reg <= {shift_reg[9], shift_reg[9:1]};
+      if (load)
+        shift_reg <= {1'b1, tx_data, 1'b0};
+      else
+        if (shift)
+          shift_reg <= {shift_reg[9], shift_reg[9:1]};
 
 endmodule
