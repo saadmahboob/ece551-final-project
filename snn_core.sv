@@ -1,4 +1,14 @@
-module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
+/*
+ * Author(s)	: Shubham Singh, Naman Singhal, Jon Sharp, Akshat Khanna
+ * Module name	: snn_core.sv
+ * Modules used	: rom_hidden_weight.sv, rom_output_weight.sv, ram_hidden_unit.sv, rom_act_func_lut.sv, mac.sv
+ *
+ * Description	: snn_core is the core of a simple neural network that outputs an address
+ * to receive a bit at that address from the ram_input_unit. Once receiving each bit of the
+ * bit map, it uses a neural network to output what digit the bitmap corresponds to. 
+ *
+ */
+ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
   typedef enum reg[1:0] {IDLE, MAC1, MAC2, DONE} state;
   state curr_state, next_state;
@@ -14,7 +24,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   logic mac_clr_n, output_clr, hidden_clr, addr_input_unit_clr, digit_clr;
 
   //MAC 1 - calculate hidden layer
-  logic [7:0]   q_extended, ram_hidden_data, hidden_weight_q;    
+  logic [7:0]   q_extended, ram_hidden_data, hidden_weight_q;
   logic [5:0]   cnt_hidden;     //counter to count up to 32 hidden weights
 
   //mac and lut registers
@@ -147,7 +157,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
       addr_input_unit <= 10'h0;
-    else 
+    else
       //clear the address ram_input_unit is being read to 0x22 because the first 36 hidden weights
       //are 0
       if (addr_input_unit_clr)
@@ -199,7 +209,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
       max_prob <= 8'h00;
-    else 
+    else
       if (digit_clr)
         max_prob <= 8'h00;
       else if (check_max)

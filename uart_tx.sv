@@ -1,4 +1,12 @@
-module uart_tx(clk, rst_n, tx_start, tx_data, tx, tx_rdy);
+/*
+ * Author(s)	: Shubham Singh, Naman Singhal, Jon Sharp, Akshat Khanna
+ * Module name	: uart_tx.sv
+ *
+ * Description: 8-bit UART transmitter. It takes clock, reset_n, data
+ * as inputs and outputs when the data is ready and the data bit by bit.
+ *
+ */
+ module uart_tx(clk, rst_n, tx_start, tx_data, tx, tx_rdy);
 
   typedef enum reg [1:0] {IDLE, TX} state_t;
   state_t state, nxt_state;

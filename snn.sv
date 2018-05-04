@@ -35,7 +35,7 @@
 
 	uart_rx 		uart_rx_in(.clk(clk), .rst_n(sys_rst_n), .rx(uart_rx_synch), .rx_data(rx_data), .rx_rdy(rx_rdy));
 	ram_input 		test_data(.clk(clk), .we(write_enable), .data(rx[0]), .addr(addr_input_unit), .q(q_input));
-	snn_core 		core(.clk(clk), .rst_n(rst_n) .start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_core_done));
+	snn_core 		core(.clk(clk), .rst_n(rst_n), .start(snn_start), .q_input(q_input), .addr_input_unit(read_addr), .digit(digit), .done(snn_core_done));
 	uart_tx 		uart_tx_out(.clk(clk), .rst_n(sys_rst_n), .tx_start(snn_core_done), .tx_data(tx_data), .tx(uart_tx), .tx_rdy());
 
 	assign addr_input_unit = write_enable ? write_addr : read_addr;
@@ -106,18 +106,22 @@
 				if(rx_rdy)
 					next_state = LOAD;
 
+      //loads the bytes coming from rx to ram_input_unit
 			LOAD: begin
 				inc_addr = 1;
 				shift = 1;
 				write_enable = 1;
 				if (~max_shift)
 					next_state = LOAD;
+        //reads when all bytes received
 				else if (max_addr)
 					next_state = READ;
 			end
 
+      //asserts the start of the snn_core once all bytes received
 			READ: begin
 				snn_start = 1;
+        //goes to IDLE once snn_core outputs the digit
 				if (~snn_core_done)
 					next_state = READ;
 			end

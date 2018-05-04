@@ -1,4 +1,8 @@
-/* Mac module accumulates the sum of products of two 8-bit
+/*
+ * Author(s)	: Shubham Singh, Naman Singhal, Jon Sharp, Akshat Khanna
+ * Module name	: mac.sv
+ *
+ * Description	: mac module accumulates the sum of products of two 8-bit
  * numbers. The clr_n input sets the accumulated sum to zero.
  *
  */

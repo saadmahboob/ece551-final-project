@@ -1,6 +1,9 @@
-/* Module for an 8-bit UART receiver.
- * It takes clock, reset_n, input signal as inputs
- * and outputs when the data is ready and the data.
+/*
+ * Author(s)	: Shubham Singh, Naman Singhal, Jon Sharp, Akshat Khanna
+ * Module name	: uart_rx.sv
+ *
+ * Description: 8-bit UART receiver. It takes clock, reset_n, input signal
+ * as inputs and outputs when the data is ready and the data.
  *
  */
  module uart_rx(clk, rst_n, rx, rx_rdy, rx_data);
