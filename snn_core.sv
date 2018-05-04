@@ -59,8 +59,11 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   always_ff @(posedge clk, negedge rst_n)
    if (!rst_n)
      digit <= 0;
-   else if (check_max)
-     if (lut_out > max_prob)
+  else
+    if (digit_clr)
+      digit <= 0;
+    else if (check_max)
+      if (lut_out > max_prob)
        digit <= digit_reg;
 
   // FSM
@@ -87,8 +90,10 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
     case (curr_state)
       IDLE:
-        if (start)    					//start bit detected
+        if (start) begin    					//start bit detected
           next_state = MAC1;
+          digit_clr = 1;
+        end
 
       MAC1: begin
         if (!addr_input_unit_max)
