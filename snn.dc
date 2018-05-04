@@ -1,20 +1,19 @@
 # Read the verilog file
-read_file -format sverilog { mac.sv ram_hidden_unit.sv ram_output.sv rom_act_func_lut.sv rom_hidden_weight.sv rom_output_weight.sv rst_synch.sv snn.sv uart_rx.sv uart_tx.sv }
+read_file -format sverilog { snn.sv mac.sv ram_hidden_unit.sv ram_output_unit.sv rom_act_func_lut.sv rom_hidden_weight.sv rom_output_weight.sv rst_synch.sv snn_core.sv uart_rx.sv uart_tx.sv }
 
 # Set top level design
 set current_design snn
 
 
 # Create clock pin with period of 40ns and set uncertainty to 0.1ns
-create_clock -name "clk" -period 40
-set_clock_uncertainty 0.10 clk
+create_clock -name "clk" -period 2.5 -waveform { 0 1 } {clk}
 set_dont_touch_network [find port clk]
 
 # Set input delay of 0.5ns and drive strength equal to ND2D2BWP gate
-set prim_inputs [remove_from_collection [all_inputs][find port clk]]
+set prim_inputs [remove_from_collection [all_inputs] [find port clk]]
 set_input_delay -clock clk 0.5 $prim_inputs
 set_driving_cell -lib_cell ND2D2BWP -from_pin A1 -library tcbn40lpbwptc $prim_inputs
-set_drive 0.1 rst_n
+set_drive 0.1 sys_rst_n
 
 # Set output delay of 0.5ns and load of 0.1pf
 set_output_delay 0.5 [all_outputs]
@@ -22,17 +21,19 @@ set_load 0.1 [all_outputs]
 
 ##### Set constraints ####
 # Set wireload model and transition time
-set_wire_load_model -name TSMC32K_Lowk_Conservative -lbrary tcbn401pbwptc
-set_max_transiton 0.1 [current_design]
-
-# Set minimum max area
-set_max_area 0
+set_wire_load_model -name TSMC32K_Lowk_Conservative -library tcbn40lpbwptc
+set_max_transition 0.1 [current_design]
 
 # Compile design
-compile -map_effort high
+compile -map_effort medium
+
+set_clock_uncertainty 0.1 clk
+set_fix_hold clk
 
 # Flatten hierarchy
 ungroup -all -flatten
+
+compile_ultra
 
 # Check design for errors
 check_design

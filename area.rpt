@@ -3,7 +3,7 @@
 Report : area
 Design : snn
 Version: M-2016.12
-Date   : Thu May  3 21:16:32 2018
+Date   : Fri May  4 15:54:57 2018
 ****************************************
 
 Library(s) Used:
@@ -12,19 +12,19 @@ Library(s) Used:
 
 Number of ports:                           12
 Number of nets:                           397
-Number of cells:                          347
-Number of combinational cells:            259
-Number of sequential cells:                88
+Number of cells:                          353
+Number of combinational cells:            266
+Number of sequential cells:                87
 Number of macros/black boxes:               0
-Number of buf/inv:                         52
-Number of references:                      65
+Number of buf/inv:                         46
+Number of references:                      66
 
-Combinational area:                350.154006
-Buf/Inv area:                       37.926001
-Noncombinational area:             370.969196
+Combinational area:                364.971606
+Buf/Inv area:                       33.339601
+Noncombinational area:             356.327997
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (Wire load has zero net area)
 
-Total cell area:                   721.123203
+Total cell area:                   721.299602
 Total area:                 undefined
 1

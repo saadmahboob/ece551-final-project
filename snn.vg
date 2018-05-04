@@ -1,0 +1,687 @@
+/////////////////////////////////////////////////////////////
+// Created by: Synopsys DC Ultra(TM) in wire load mode
+// Version   : M-2016.12
+// Date      : Fri May  4 15:54:57 2018
+/////////////////////////////////////////////////////////////
+
+
+module snn ( clk, sys_rst_n, led, uart_tx, uart_rx );
+  output [7:0] led;
+  input clk, sys_rst_n, uart_rx;
+  output uart_tx;
+  wire   rst_n, uart_rx_synch, uart_rx_ff, N25, N26, N27, N28, N36, N37, N38,
+         N39, N40, N41, N42, N43, n40, n41, n42, n43, n44, n45, n46, n47, n48,
+         n49, \i_rst_synch/temp , \i_rst_synch/*Logic1* , \uart_rx_in/n42 ,
+         \uart_rx_in/n41 , \uart_rx_in/n40 , \uart_rx_in/n39 ,
+         \uart_rx_in/N61 , \uart_rx_in/N60 , \uart_rx_in/N59 ,
+         \uart_rx_in/N58 , \uart_rx_in/N57 , \uart_rx_in/N56 ,
+         \uart_rx_in/N55 , \uart_rx_in/N54 , \uart_rx_in/N53 ,
+         \uart_rx_in/N52 , \uart_rx_in/N51 , \uart_rx_in/N50 ,
+         \uart_rx_in/N48 , \uart_rx_in/N47 , \uart_rx_in/N46 ,
+         \uart_rx_in/N45 , \uart_rx_in/N44 , \uart_rx_in/N43 ,
+         \uart_rx_in/N42 , \uart_rx_in/N41 , \uart_rx_in/N40 ,
+         \uart_rx_in/N39 , \uart_rx_in/next_state[0] , \core/r95/carry[2] ,
+         \core/r95/carry[3] , \core/r95/carry[4] , \core/r95/carry[5] ,
+         \core/n106 , \core/n105 , \core/n104 , \core/n103 , \core/n102 ,
+         \core/n101 , \core/n100 , \core/n99 , \core/n98 , \core/n97 ,
+         \core/n96 , \core/n95 , \core/n94 , \core/n93 , \core/n92 ,
+         \core/n91 , \core/n90 , \core/n89 , \core/n84 , \core/n83 ,
+         \core/N76 , \core/N75 , \core/N74 , \core/N73 , \core/N46 ,
+         \core/N45 , \core/N44 , \core/N43 , \core/N42 , \core/N41 ,
+         \core/N40 , \core/N39 , \core/n79 , \core/n76 , \uart_tx_out/n36 ,
+         \uart_tx_out/n35 , \uart_tx_out/n34 , \uart_tx_out/n33 ,
+         \uart_tx_out/n32 , \uart_tx_out/n31 , \uart_tx_out/n30 ,
+         \uart_tx_out/n29 , \uart_tx_out/n28 , \uart_tx_out/n27 ,
+         \uart_tx_out/n26 , \uart_tx_out/n25 , \uart_tx_out/n24 ,
+         \uart_tx_out/n23 , \uart_tx_out/N46 , \uart_tx_out/N45 ,
+         \uart_tx_out/N44 , \uart_tx_out/N43 , \uart_tx_out/N42 ,
+         \uart_tx_out/N41 , \uart_tx_out/N40 , \uart_tx_out/N39 ,
+         \uart_tx_out/N38 , \uart_tx_out/N37 , \uart_tx_out/N36 ,
+         \uart_tx_out/N35 , \uart_tx_out/N33 , \uart_tx_out/N32 ,
+         \uart_tx_out/N31 , \uart_tx_out/N30 , \uart_tx_out/N29 ,
+         \uart_tx_out/N28 , \uart_tx_out/N27 , \uart_tx_out/N26 ,
+         \uart_tx_out/N25 , \uart_tx_out/N24 , \uart_tx_out/nxt_state[0] ,
+         \uart_tx_out/state[0] , \uart_tx_out/n44 , n202, n203, n210, n211,
+         n212, n214, n215, n216, n217, n218, n219, n220, n221, n222, n223,
+         n224, n225, n226, n227, n228, n229, n230, n231, n232, n233, n234,
+         n235, n236, n237, n238, n239, n240, n241, n242, n243, n244, n245,
+         n246, n247, n248, n249, n250, n251, n252, n253, n254, n255, n256,
+         n257, n258, n259, n260, n261, n262, n263, n264, n265, n266, n267,
+         n268, n269, n270, n271, n272, n273, n274, n275, n276, n277, n278,
+         n279, n280, n281, n282, n283, n284, n285, n286, n287, n288, n289,
+         n290, n291, n292, n293, n294, n295, n296, n297, n298, n299, n300,
+         n301, n302, n303, n304, n305, n306, n307, n308, n309, n310, n311,
+         n312, n313, n314, n315, n316, n317, n318, n319, n320, n321, n322,
+         n323, n324, n325, n326, n327, n328, n329, n330, n331, n332, n333,
+         n334, n335, n336, n337, n338, n339, n340, n341, n342, n343;
+  wire   [9:0] read_addr;
+  wire   [9:0] write_addr;
+  wire   [3:0] shift_cnt;
+  wire   [1:0] state;
+  wire   [1:0] next_state;
+  wire   [1:0] \uart_rx_in/state ;
+  wire   [3:0] \uart_rx_in/bit_cnt ;
+  wire   [11:0] \uart_rx_in/baud_cnt ;
+  wire   [11:2] \uart_rx_in/add_96/carry ;
+  wire   [1:0] \core/next_state ;
+  wire   [1:0] \core/curr_state ;
+  wire   [3:0] \core/digit_reg ;
+  wire   [5:0] \core/cnt_hidden ;
+  wire   [9:2] \core/add_159/carry ;
+  wire   [9:1] \uart_tx_out/shift_reg ;
+  wire   [11:0] \uart_tx_out/baud ;
+  wire   [3:0] \uart_tx_out/bit_cnt ;
+  wire   [11:2] \uart_tx_out/add_65/carry ;
+  wire   [9:2] \add_75/carry ;
+  assign led[0] = \core/n79 ;
+  assign led[1] = \core/n76 ;
+
+  DFCNQD1BWP \state_reg[0]  ( .D(next_state[0]), .CP(clk), .CDN(n341), .Q(
+        state[0]) );
+  DFCNQD1BWP \state_reg[1]  ( .D(next_state[1]), .CP(clk), .CDN(n341), .Q(
+        state[1]) );
+  DFCNQD1BWP \shift_cnt_reg[0]  ( .D(N25), .CP(clk), .CDN(n341), .Q(
+        shift_cnt[0]) );
+  DFCNQD1BWP \shift_cnt_reg[1]  ( .D(N26), .CP(clk), .CDN(n341), .Q(
+        shift_cnt[1]) );
+  DFCNQD1BWP \write_addr_reg[1]  ( .D(n49), .CP(clk), .CDN(n341), .Q(
+        write_addr[1]) );
+  DFCNQD1BWP \write_addr_reg[0]  ( .D(n48), .CP(clk), .CDN(n343), .Q(
+        write_addr[0]) );
+  DFCNQD1BWP \write_addr_reg[2]  ( .D(n47), .CP(clk), .CDN(n343), .Q(
+        write_addr[2]) );
+  DFCNQD1BWP \write_addr_reg[3]  ( .D(n46), .CP(clk), .CDN(n341), .Q(
+        write_addr[3]) );
+  DFCNQD1BWP \write_addr_reg[4]  ( .D(n45), .CP(clk), .CDN(n341), .Q(
+        write_addr[4]) );
+  DFCNQD1BWP \write_addr_reg[5]  ( .D(n44), .CP(clk), .CDN(n342), .Q(
+        write_addr[5]) );
+  DFCNQD1BWP \write_addr_reg[6]  ( .D(n43), .CP(clk), .CDN(n341), .Q(
+        write_addr[6]) );
+  DFCNQD1BWP \write_addr_reg[7]  ( .D(n42), .CP(clk), .CDN(n341), .Q(
+        write_addr[7]) );
+  DFCNQD1BWP \write_addr_reg[8]  ( .D(n41), .CP(clk), .CDN(n341), .Q(
+        write_addr[8]) );
+  DFCNQD1BWP \write_addr_reg[9]  ( .D(n40), .CP(clk), .CDN(n341), .Q(
+        write_addr[9]) );
+  DFCNQD1BWP \shift_cnt_reg[2]  ( .D(N27), .CP(clk), .CDN(rst_n), .Q(
+        shift_cnt[2]) );
+  DFCNQD1BWP \shift_cnt_reg[3]  ( .D(N28), .CP(clk), .CDN(n341), .Q(
+        shift_cnt[3]) );
+  DFSNQD1BWP uart_rx_synch_reg ( .D(uart_rx_ff), .CP(clk), .SDN(n343), .Q(
+        uart_rx_synch) );
+  DFSNQD1BWP uart_rx_ff_reg ( .D(uart_rx), .CP(clk), .SDN(n341), .Q(uart_rx_ff) );
+  DFNCND1BWP \i_rst_synch/rst_n_reg  ( .D(\i_rst_synch/temp ), .CPN(clk), 
+        .CDN(sys_rst_n), .Q(rst_n) );
+  DFNCND1BWP \i_rst_synch/temp_reg  ( .D(\i_rst_synch/*Logic1* ), .CPN(clk), 
+        .CDN(sys_rst_n), .Q(\i_rst_synch/temp ) );
+  EDFCND1BWP \uart_rx_in/state_reg[1]  ( .D(\uart_rx_in/state [0]), .E(n211), 
+        .CP(clk), .CDN(sys_rst_n), .Q(\uart_rx_in/state [1]), .QN(n340) );
+  DFCNQD1BWP \uart_rx_in/bit_cnt_reg[2]  ( .D(\uart_rx_in/n40 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/bit_cnt [2]) );
+  DFCNQD1BWP \uart_rx_in/bit_cnt_reg[1]  ( .D(\uart_rx_in/n39 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/bit_cnt [1]) );
+  DFCNQD1BWP \uart_rx_in/state_reg[0]  ( .D(\uart_rx_in/next_state[0] ), .CP(
+        clk), .CDN(sys_rst_n), .Q(\uart_rx_in/state [0]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[11]  ( .D(\uart_rx_in/N61 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [11]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[10]  ( .D(\uart_rx_in/N60 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [10]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[9]  ( .D(\uart_rx_in/N59 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [9]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[8]  ( .D(\uart_rx_in/N58 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [8]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[7]  ( .D(\uart_rx_in/N57 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [7]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[6]  ( .D(\uart_rx_in/N56 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [6]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[5]  ( .D(\uart_rx_in/N55 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [5]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[4]  ( .D(\uart_rx_in/N54 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [4]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[3]  ( .D(\uart_rx_in/N53 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [3]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[2]  ( .D(\uart_rx_in/N52 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [2]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[1]  ( .D(\uart_rx_in/N51 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [1]) );
+  DFCNQD1BWP \uart_rx_in/baud_cnt_reg[0]  ( .D(\uart_rx_in/N50 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/baud_cnt [0]) );
+  DFCNQD1BWP \uart_rx_in/bit_cnt_reg[3]  ( .D(\uart_rx_in/n41 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/bit_cnt [3]) );
+  DFCNQD1BWP \uart_rx_in/bit_cnt_reg[0]  ( .D(\uart_rx_in/n42 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_rx_in/bit_cnt [0]) );
+  DFCNQD1BWP \core/digit_reg_reg[2]  ( .D(\core/n84 ), .CP(clk), .CDN(n342), 
+        .Q(\core/digit_reg [2]) );
+  DFCNQD1BWP \core/digit_reg_reg[1]  ( .D(\core/n83 ), .CP(clk), .CDN(n342), 
+        .Q(\core/digit_reg [1]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[9]  ( .D(\core/n89 ), .CP(clk), .CDN(
+        n341), .Q(read_addr[9]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[8]  ( .D(\core/n90 ), .CP(clk), .CDN(
+        n341), .Q(read_addr[8]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[7]  ( .D(\core/n91 ), .CP(clk), .CDN(
+        n341), .Q(read_addr[7]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[6]  ( .D(\core/n92 ), .CP(clk), .CDN(
+        n341), .Q(read_addr[6]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[5]  ( .D(\core/n93 ), .CP(clk), .CDN(
+        n343), .Q(read_addr[5]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[4]  ( .D(\core/n94 ), .CP(clk), .CDN(
+        n341), .Q(read_addr[4]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[3]  ( .D(\core/n95 ), .CP(clk), .CDN(
+        n342), .Q(read_addr[3]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[2]  ( .D(\core/n96 ), .CP(clk), .CDN(
+        n342), .Q(read_addr[2]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[0]  ( .D(\core/n97 ), .CP(clk), .CDN(
+        n342), .Q(read_addr[0]) );
+  DFCNQD1BWP \core/addr_input_unit_reg[1]  ( .D(\core/n98 ), .CP(clk), .CDN(
+        n342), .Q(read_addr[1]) );
+  DFCNQD1BWP \core/curr_state_reg[0]  ( .D(\core/next_state [0]), .CP(clk), 
+        .CDN(rst_n), .Q(\core/curr_state [0]) );
+  DFCNQD1BWP \core/curr_state_reg[1]  ( .D(\core/next_state [1]), .CP(clk), 
+        .CDN(n343), .Q(\core/curr_state [1]) );
+  DFCNQD1BWP \core/cnt_hidden_reg[5]  ( .D(\core/n99 ), .CP(clk), .CDN(n342), 
+        .Q(\core/cnt_hidden [5]) );
+  DFCNQD1BWP \core/cnt_hidden_reg[4]  ( .D(\core/n100 ), .CP(clk), .CDN(n342), 
+        .Q(\core/cnt_hidden [4]) );
+  DFCNQD1BWP \core/cnt_hidden_reg[3]  ( .D(\core/n101 ), .CP(clk), .CDN(n343), 
+        .Q(\core/cnt_hidden [3]) );
+  DFCNQD1BWP \core/cnt_hidden_reg[2]  ( .D(\core/n102 ), .CP(clk), .CDN(n342), 
+        .Q(\core/cnt_hidden [2]) );
+  DFCNQD1BWP \core/cnt_hidden_reg[0]  ( .D(\core/n103 ), .CP(clk), .CDN(n343), 
+        .Q(\core/cnt_hidden [0]) );
+  DFCNQD1BWP \core/cnt_hidden_reg[1]  ( .D(\core/n104 ), .CP(clk), .CDN(n343), 
+        .Q(\core/cnt_hidden [1]) );
+  DFCNQD1BWP \core/digit_reg_reg[3]  ( .D(\core/n105 ), .CP(clk), .CDN(n342), 
+        .Q(\core/digit_reg [3]) );
+  DFCNQD1BWP \core/digit_reg_reg[0]  ( .D(\core/n106 ), .CP(clk), .CDN(rst_n), 
+        .Q(\core/digit_reg [0]) );
+  DFSNQD1BWP \uart_tx_out/shift_reg_reg[0]  ( .D(\uart_tx_out/n23 ), .CP(clk), 
+        .SDN(sys_rst_n), .Q(\uart_tx_out/n44 ) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[1]  ( .D(\uart_tx_out/n32 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [1]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[2]  ( .D(\uart_tx_out/n31 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [2]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[3]  ( .D(\uart_tx_out/n30 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [3]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[4]  ( .D(\uart_tx_out/n29 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [4]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[5]  ( .D(\uart_tx_out/n28 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [5]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[6]  ( .D(\uart_tx_out/n27 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [6]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[7]  ( .D(\uart_tx_out/n26 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [7]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[8]  ( .D(\uart_tx_out/n25 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [8]) );
+  DFCNQD1BWP \uart_tx_out/shift_reg_reg[9]  ( .D(\uart_tx_out/n24 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/shift_reg [9]) );
+  DFCNQD1BWP \uart_tx_out/bit_cnt_reg[3]  ( .D(\uart_tx_out/n35 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/bit_cnt [3]) );
+  DFCNQD1BWP \uart_tx_out/bit_cnt_reg[2]  ( .D(\uart_tx_out/n34 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/bit_cnt [2]) );
+  DFCNQD1BWP \uart_tx_out/bit_cnt_reg[1]  ( .D(\uart_tx_out/n33 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/bit_cnt [1]) );
+  DFCNQD1BWP \uart_tx_out/state_reg[0]  ( .D(\uart_tx_out/nxt_state[0] ), .CP(
+        clk), .CDN(sys_rst_n), .Q(\uart_tx_out/state[0] ) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[11]  ( .D(\uart_tx_out/N46 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [11]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[10]  ( .D(\uart_tx_out/N45 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [10]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[9]  ( .D(\uart_tx_out/N44 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [9]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[8]  ( .D(\uart_tx_out/N43 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [8]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[7]  ( .D(\uart_tx_out/N42 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [7]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[6]  ( .D(\uart_tx_out/N41 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [6]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[5]  ( .D(\uart_tx_out/N40 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [5]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[4]  ( .D(\uart_tx_out/N39 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [4]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[3]  ( .D(\uart_tx_out/N38 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [3]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[2]  ( .D(\uart_tx_out/N37 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [2]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[1]  ( .D(\uart_tx_out/N36 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [1]) );
+  DFCNQD1BWP \uart_tx_out/baud_reg[0]  ( .D(\uart_tx_out/N35 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/baud [0]) );
+  DFCNQD1BWP \uart_tx_out/bit_cnt_reg[0]  ( .D(\uart_tx_out/n36 ), .CP(clk), 
+        .CDN(sys_rst_n), .Q(\uart_tx_out/bit_cnt [0]) );
+  HA1D0BWP \core/U93  ( .A(\core/cnt_hidden [1]), .B(\core/cnt_hidden [0]), 
+        .CO(\core/r95/carry[2] ), .S(\core/N73 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_1  ( .A(\uart_tx_out/baud [1]), .B(
+        \uart_tx_out/baud [0]), .CO(\uart_tx_out/add_65/carry [2]), .S(
+        \uart_tx_out/N24 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_2  ( .A(\uart_tx_out/baud [2]), .B(
+        \uart_tx_out/add_65/carry [2]), .CO(\uart_tx_out/add_65/carry [3]), 
+        .S(\uart_tx_out/N25 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_3  ( .A(\uart_tx_out/baud [3]), .B(
+        \uart_tx_out/add_65/carry [3]), .CO(\uart_tx_out/add_65/carry [4]), 
+        .S(\uart_tx_out/N26 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_4  ( .A(\uart_tx_out/baud [4]), .B(
+        \uart_tx_out/add_65/carry [4]), .CO(\uart_tx_out/add_65/carry [5]), 
+        .S(\uart_tx_out/N27 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_5  ( .A(\uart_tx_out/baud [5]), .B(
+        \uart_tx_out/add_65/carry [5]), .CO(\uart_tx_out/add_65/carry [6]), 
+        .S(\uart_tx_out/N28 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_6  ( .A(\uart_tx_out/baud [6]), .B(
+        \uart_tx_out/add_65/carry [6]), .CO(\uart_tx_out/add_65/carry [7]), 
+        .S(\uart_tx_out/N29 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_7  ( .A(\uart_tx_out/baud [7]), .B(
+        \uart_tx_out/add_65/carry [7]), .CO(\uart_tx_out/add_65/carry [8]), 
+        .S(\uart_tx_out/N30 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_8  ( .A(\uart_tx_out/baud [8]), .B(
+        \uart_tx_out/add_65/carry [8]), .CO(\uart_tx_out/add_65/carry [9]), 
+        .S(\uart_tx_out/N31 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_9  ( .A(\uart_tx_out/baud [9]), .B(
+        \uart_tx_out/add_65/carry [9]), .CO(\uart_tx_out/add_65/carry [10]), 
+        .S(\uart_tx_out/N32 ) );
+  HA1D0BWP \uart_tx_out/add_65/U1_1_10  ( .A(\uart_tx_out/baud [10]), .B(
+        \uart_tx_out/add_65/carry [10]), .CO(\uart_tx_out/add_65/carry [11]), 
+        .S(\uart_tx_out/N33 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_1  ( .A(\uart_rx_in/baud_cnt [1]), .B(
+        \uart_rx_in/baud_cnt [0]), .CO(\uart_rx_in/add_96/carry [2]), .S(
+        \uart_rx_in/N39 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_2  ( .A(\uart_rx_in/baud_cnt [2]), .B(
+        \uart_rx_in/add_96/carry [2]), .CO(\uart_rx_in/add_96/carry [3]), .S(
+        \uart_rx_in/N40 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_3  ( .A(\uart_rx_in/baud_cnt [3]), .B(
+        \uart_rx_in/add_96/carry [3]), .CO(\uart_rx_in/add_96/carry [4]), .S(
+        \uart_rx_in/N41 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_4  ( .A(\uart_rx_in/baud_cnt [4]), .B(
+        \uart_rx_in/add_96/carry [4]), .CO(\uart_rx_in/add_96/carry [5]), .S(
+        \uart_rx_in/N42 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_5  ( .A(\uart_rx_in/baud_cnt [5]), .B(
+        \uart_rx_in/add_96/carry [5]), .CO(\uart_rx_in/add_96/carry [6]), .S(
+        \uart_rx_in/N43 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_6  ( .A(\uart_rx_in/baud_cnt [6]), .B(
+        \uart_rx_in/add_96/carry [6]), .CO(\uart_rx_in/add_96/carry [7]), .S(
+        \uart_rx_in/N44 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_7  ( .A(\uart_rx_in/baud_cnt [7]), .B(
+        \uart_rx_in/add_96/carry [7]), .CO(\uart_rx_in/add_96/carry [8]), .S(
+        \uart_rx_in/N45 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_8  ( .A(\uart_rx_in/baud_cnt [8]), .B(
+        \uart_rx_in/add_96/carry [8]), .CO(\uart_rx_in/add_96/carry [9]), .S(
+        \uart_rx_in/N46 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_9  ( .A(\uart_rx_in/baud_cnt [9]), .B(
+        \uart_rx_in/add_96/carry [9]), .CO(\uart_rx_in/add_96/carry [10]), .S(
+        \uart_rx_in/N47 ) );
+  HA1D0BWP \uart_rx_in/add_96/U1_1_10  ( .A(\uart_rx_in/baud_cnt [10]), .B(
+        \uart_rx_in/add_96/carry [10]), .CO(\uart_rx_in/add_96/carry [11]), 
+        .S(\uart_rx_in/N48 ) );
+  HA1D0BWP \core/add_159/U1_1_1  ( .A(read_addr[1]), .B(read_addr[0]), .CO(
+        \core/add_159/carry [2]), .S(\core/N39 ) );
+  HA1D0BWP \core/add_159/U1_1_2  ( .A(read_addr[2]), .B(
+        \core/add_159/carry [2]), .CO(\core/add_159/carry [3]), .S(\core/N40 )
+         );
+  HA1D0BWP \core/add_159/U1_1_3  ( .A(read_addr[3]), .B(
+        \core/add_159/carry [3]), .CO(\core/add_159/carry [4]), .S(\core/N41 )
+         );
+  HA1D0BWP \core/add_159/U1_1_4  ( .A(read_addr[4]), .B(
+        \core/add_159/carry [4]), .CO(\core/add_159/carry [5]), .S(\core/N42 )
+         );
+  HA1D0BWP \core/add_159/U1_1_5  ( .A(read_addr[5]), .B(
+        \core/add_159/carry [5]), .CO(\core/add_159/carry [6]), .S(\core/N43 )
+         );
+  HA1D0BWP \core/add_159/U1_1_6  ( .A(read_addr[6]), .B(
+        \core/add_159/carry [6]), .CO(\core/add_159/carry [7]), .S(\core/N44 )
+         );
+  HA1D0BWP \core/add_159/U1_1_7  ( .A(read_addr[7]), .B(
+        \core/add_159/carry [7]), .CO(\core/add_159/carry [8]), .S(\core/N45 )
+         );
+  HA1D0BWP \core/add_159/U1_1_8  ( .A(read_addr[8]), .B(
+        \core/add_159/carry [8]), .CO(\core/add_159/carry [9]), .S(\core/N46 )
+         );
+  HA1D0BWP \add_75/U1_1_1  ( .A(write_addr[1]), .B(write_addr[0]), .CO(
+        \add_75/carry [2]), .S(N36) );
+  HA1D0BWP \add_75/U1_1_2  ( .A(write_addr[2]), .B(\add_75/carry [2]), .CO(
+        \add_75/carry [3]), .S(N37) );
+  HA1D0BWP \add_75/U1_1_3  ( .A(write_addr[3]), .B(\add_75/carry [3]), .CO(
+        \add_75/carry [4]), .S(N38) );
+  HA1D0BWP \add_75/U1_1_4  ( .A(write_addr[4]), .B(\add_75/carry [4]), .CO(
+        \add_75/carry [5]), .S(N39) );
+  HA1D0BWP \add_75/U1_1_5  ( .A(write_addr[5]), .B(\add_75/carry [5]), .CO(
+        \add_75/carry [6]), .S(N40) );
+  HA1D0BWP \add_75/U1_1_6  ( .A(write_addr[6]), .B(\add_75/carry [6]), .CO(
+        \add_75/carry [7]), .S(N41) );
+  HA1D0BWP \add_75/U1_1_7  ( .A(write_addr[7]), .B(\add_75/carry [7]), .CO(
+        \add_75/carry [8]), .S(N42) );
+  HA1D0BWP \add_75/U1_1_8  ( .A(write_addr[8]), .B(\add_75/carry [8]), .CO(
+        \add_75/carry [9]), .S(N43) );
+  HA1D0BWP \core/U95  ( .A(\core/cnt_hidden [2]), .B(\core/r95/carry[2] ), 
+        .CO(\core/r95/carry[3] ), .S(\core/N74 ) );
+  HA1D0BWP \core/U94  ( .A(\core/cnt_hidden [3]), .B(\core/r95/carry[3] ), 
+        .CO(\core/r95/carry[4] ), .S(\core/N75 ) );
+  HA1D0BWP \core/U102  ( .A(\core/cnt_hidden [4]), .B(\core/r95/carry[4] ), 
+        .CO(\core/r95/carry[5] ), .S(\core/N76 ) );
+  CKND0BWP U282 ( .I(n317), .ZN(n333) );
+  INR2D0BWP U283 ( .A1(\uart_tx_out/N33 ), .B1(n203), .ZN(\uart_tx_out/N45 )
+         );
+  INR2D0BWP U284 ( .A1(\uart_tx_out/N32 ), .B1(n203), .ZN(\uart_tx_out/N44 )
+         );
+  INR2D0BWP U285 ( .A1(\uart_tx_out/N27 ), .B1(n202), .ZN(\uart_tx_out/N39 )
+         );
+  INR2D0BWP U286 ( .A1(\uart_tx_out/N26 ), .B1(n202), .ZN(\uart_tx_out/N38 )
+         );
+  INR2D0BWP U287 ( .A1(\uart_tx_out/N28 ), .B1(n203), .ZN(\uart_tx_out/N40 )
+         );
+  INR2D0BWP U288 ( .A1(\uart_tx_out/N25 ), .B1(n203), .ZN(\uart_tx_out/N37 )
+         );
+  INR2D0BWP U289 ( .A1(\uart_tx_out/N30 ), .B1(n202), .ZN(\uart_tx_out/N42 )
+         );
+  INR2D0BWP U290 ( .A1(\uart_tx_out/N24 ), .B1(n203), .ZN(\uart_tx_out/N36 )
+         );
+  INR2D0BWP U291 ( .A1(\uart_tx_out/N31 ), .B1(n202), .ZN(\uart_tx_out/N43 )
+         );
+  INR2D0BWP U292 ( .A1(\uart_tx_out/N29 ), .B1(n203), .ZN(\uart_tx_out/N41 )
+         );
+  OA21D1BWP U293 ( .A1(\uart_tx_out/state[0] ), .A2(n279), .B(n278), .Z(n337)
+         );
+  INR2D0BWP U294 ( .A1(\uart_rx_in/N48 ), .B1(n330), .ZN(\uart_rx_in/N60 ) );
+  INR2D0BWP U295 ( .A1(\uart_rx_in/N44 ), .B1(n330), .ZN(\uart_rx_in/N56 ) );
+  INR2D0BWP U296 ( .A1(\uart_rx_in/N43 ), .B1(n330), .ZN(\uart_rx_in/N55 ) );
+  INR2D0BWP U297 ( .A1(\uart_rx_in/N40 ), .B1(n330), .ZN(\uart_rx_in/N52 ) );
+  INR2D0BWP U298 ( .A1(\uart_rx_in/N42 ), .B1(n330), .ZN(\uart_rx_in/N54 ) );
+  INR2D0BWP U299 ( .A1(\uart_rx_in/N46 ), .B1(n330), .ZN(\uart_rx_in/N58 ) );
+  INR2D0BWP U300 ( .A1(\uart_rx_in/N45 ), .B1(n330), .ZN(\uart_rx_in/N57 ) );
+  INR2D0BWP U301 ( .A1(\uart_rx_in/N39 ), .B1(n330), .ZN(\uart_rx_in/N51 ) );
+  INR2D0BWP U302 ( .A1(\uart_rx_in/N41 ), .B1(n330), .ZN(\uart_rx_in/N53 ) );
+  INR2D0BWP U303 ( .A1(\uart_rx_in/N47 ), .B1(n330), .ZN(\uart_rx_in/N59 ) );
+  INR2D0BWP U304 ( .A1(\add_75/carry [9]), .B1(n318), .ZN(n321) );
+  INR2D0BWP U305 ( .A1(\core/add_159/carry [9]), .B1(n322), .ZN(n325) );
+  INVD1BWP U306 ( .I(n337), .ZN(n202) );
+  AOI31D1BWP U307 ( .A1(\core/digit_reg [0]), .A2(\core/digit_reg [1]), .A3(
+        n310), .B(n300), .ZN(n309) );
+  MOAI22D1BWP U308 ( .A1(n231), .A2(n230), .B1(n236), .B2(n265), .ZN(n267) );
+  NR2D1BWP U309 ( .A1(n333), .A2(n217), .ZN(n214) );
+  OAI22D0BWP U310 ( .A1(n297), .A2(n293), .B1(n296), .B2(n292), .ZN(
+        \uart_tx_out/n34 ) );
+  AOI32D0BWP U311 ( .A1(n310), .A2(\core/digit_reg [3]), .A3(n313), .B1(n309), 
+        .B2(\core/digit_reg [3]), .ZN(n311) );
+  AO22D0BWP U312 ( .A1(n327), .A2(\uart_tx_out/shift_reg [8]), .B1(n326), .B2(
+        \uart_tx_out/shift_reg [7]), .Z(\uart_tx_out/n26 ) );
+  AO22D0BWP U313 ( .A1(n327), .A2(\uart_tx_out/shift_reg [1]), .B1(n326), .B2(
+        uart_tx), .Z(\uart_tx_out/n23 ) );
+  AO22D0BWP U314 ( .A1(n327), .A2(\uart_tx_out/shift_reg [6]), .B1(n326), .B2(
+        \uart_tx_out/shift_reg [5]), .Z(\uart_tx_out/n28 ) );
+  INVD1BWP U315 ( .I(n337), .ZN(n203) );
+  OR2D0BWP U316 ( .A1(n215), .A2(n216), .Z(n217) );
+  CKBD2BWP U317 ( .I(n225), .Z(n326) );
+  CKAN2D2BWP U318 ( .A1(n268), .A2(n267), .Z(n232) );
+  CKND0BWP U319 ( .I(n274), .ZN(n303) );
+  IND3D0BWP U320 ( .A1(\uart_rx_in/state [0]), .B1(\uart_rx_in/state [1]), 
+        .B2(n211), .ZN(n288) );
+  NR2D0BWP U321 ( .A1(n286), .A2(n257), .ZN(n268) );
+  NR2XD0BWP U322 ( .A1(n263), .A2(n260), .ZN(n224) );
+  INR2XD0BWP U323 ( .A1(n279), .B1(\uart_tx_out/state[0] ), .ZN(n261) );
+  ND4D0BWP U324 ( .A1(\uart_rx_in/state [1]), .A2(\uart_rx_in/bit_cnt [3]), 
+        .A3(n316), .A4(n336), .ZN(n253) );
+  INVD1BWP U325 ( .I(\core/curr_state [1]), .ZN(n244) );
+  TIELBWP U326 ( .ZN(led[7]) );
+  TIELBWP U327 ( .ZN(led[6]) );
+  TIELBWP U328 ( .ZN(led[5]) );
+  TIELBWP U329 ( .ZN(led[4]) );
+  TIELBWP U330 ( .ZN(led[3]) );
+  TIELBWP U331 ( .ZN(led[2]) );
+  ND3D0BWP U332 ( .A1(read_addr[1]), .A2(read_addr[2]), .A3(n229), .ZN(n231)
+         );
+  AOI21D0BWP U333 ( .A1(uart_rx_synch), .A2(n340), .B(\uart_rx_in/state [0]), 
+        .ZN(n255) );
+  AOI21D0BWP U334 ( .A1(n211), .A2(n340), .B(n256), .ZN(n254) );
+  INVD1BWP U335 ( .I(\core/curr_state [0]), .ZN(n237) );
+  IND3D0BWP U336 ( .A1(\uart_tx_out/baud [10]), .B1(\uart_tx_out/baud [9]), 
+        .B2(\uart_tx_out/baud [5]), .ZN(n220) );
+  NR2D0BWP U337 ( .A1(n327), .A2(n261), .ZN(n225) );
+  CKND0BWP U338 ( .I(\core/cnt_hidden [1]), .ZN(n287) );
+  ND4D0BWP U339 ( .A1(n248), .A2(read_addr[8]), .A3(read_addr[9]), .A4(n306), 
+        .ZN(n230) );
+  NR4D1BWP U340 ( .A1(\core/cnt_hidden [1]), .A2(\core/curr_state [1]), .A3(
+        n237), .A4(n245), .ZN(n257) );
+  NR2D0BWP U341 ( .A1(n316), .A2(n317), .ZN(n242) );
+  CKND0BWP U342 ( .I(state[0]), .ZN(n275) );
+  AN4D0BWP U343 ( .A1(write_addr[0]), .A2(write_addr[1]), .A3(write_addr[2]), 
+        .A4(write_addr[8]), .Z(n218) );
+  IND3D0BWP U344 ( .A1(shift_cnt[3]), .B1(shift_cnt[2]), .B2(n273), .ZN(n276)
+         );
+  NR2D0BWP U345 ( .A1(n272), .A2(n318), .ZN(n273) );
+  OAI21D0BWP U346 ( .A1(n284), .A2(n280), .B(n283), .ZN(\uart_tx_out/n36 ) );
+  NR2D0BWP U347 ( .A1(n202), .A2(\uart_tx_out/baud [0]), .ZN(\uart_tx_out/N35 ) );
+  AO211D0BWP U348 ( .A1(\uart_tx_out/state[0] ), .A2(n263), .B(n262), .C(n261), 
+        .Z(\uart_tx_out/nxt_state[0] ) );
+  AOI32D0BWP U349 ( .A1(n284), .A2(\uart_tx_out/bit_cnt [1]), .A3(n283), .B1(
+        n282), .B2(n281), .ZN(\uart_tx_out/n33 ) );
+  AOI32D0BWP U350 ( .A1(n297), .A2(\uart_tx_out/bit_cnt [3]), .A3(n296), .B1(
+        n295), .B2(n294), .ZN(\uart_tx_out/n35 ) );
+  ND4D0BWP U351 ( .A1(\uart_tx_out/bit_cnt [2]), .A2(\uart_tx_out/bit_cnt [0]), 
+        .A3(\uart_tx_out/bit_cnt [1]), .A4(n327), .ZN(n295) );
+  OR2D0BWP U352 ( .A1(n261), .A2(\uart_tx_out/shift_reg [9]), .Z(
+        \uart_tx_out/n24 ) );
+  AO22D0BWP U353 ( .A1(n327), .A2(\uart_tx_out/shift_reg [9]), .B1(n326), .B2(
+        \uart_tx_out/shift_reg [8]), .Z(\uart_tx_out/n25 ) );
+  AO22D0BWP U354 ( .A1(n327), .A2(\uart_tx_out/shift_reg [7]), .B1(n326), .B2(
+        \uart_tx_out/shift_reg [6]), .Z(\uart_tx_out/n27 ) );
+  AO22D0BWP U355 ( .A1(n327), .A2(\uart_tx_out/shift_reg [5]), .B1(n326), .B2(
+        \uart_tx_out/shift_reg [4]), .Z(\uart_tx_out/n29 ) );
+  AO22D0BWP U356 ( .A1(n327), .A2(\uart_tx_out/shift_reg [4]), .B1(n326), .B2(
+        \uart_tx_out/shift_reg [3]), .Z(\uart_tx_out/n30 ) );
+  AO22D0BWP U357 ( .A1(n327), .A2(\uart_tx_out/shift_reg [3]), .B1(n326), .B2(
+        \uart_tx_out/shift_reg [2]), .Z(\uart_tx_out/n31 ) );
+  AOI21D0BWP U358 ( .A1(n271), .A2(n270), .B(n269), .ZN(\core/n99 ) );
+  OAI21D0BWP U359 ( .A1(n271), .A2(n270), .B(n268), .ZN(n269) );
+  IND2D0BWP U360 ( .A1(n257), .B1(n266), .ZN(\core/next_state [1]) );
+  OAI211D0BWP U361 ( .A1(n266), .A2(n265), .B(n264), .C(n322), .ZN(
+        \core/next_state [0]) );
+  AOI22D0BWP U362 ( .A1(read_addr[1]), .A2(n329), .B1(n328), .B2(\core/N39 ), 
+        .ZN(n247) );
+  AOI22D0BWP U363 ( .A1(read_addr[0]), .A2(n308), .B1(n307), .B2(n306), .ZN(
+        \core/n97 ) );
+  AO22D0BWP U364 ( .A1(read_addr[2]), .A2(n329), .B1(n328), .B2(\core/N40 ), 
+        .Z(\core/n96 ) );
+  AO22D0BWP U365 ( .A1(read_addr[4]), .A2(n329), .B1(n328), .B2(\core/N42 ), 
+        .Z(\core/n94 ) );
+  AOI22D0BWP U366 ( .A1(read_addr[5]), .A2(n329), .B1(n328), .B2(\core/N43 ), 
+        .ZN(n246) );
+  AO22D0BWP U367 ( .A1(read_addr[6]), .A2(n329), .B1(n328), .B2(\core/N44 ), 
+        .Z(\core/n92 ) );
+  AO22D0BWP U368 ( .A1(read_addr[7]), .A2(n329), .B1(n328), .B2(\core/N45 ), 
+        .Z(\core/n91 ) );
+  AO22D0BWP U369 ( .A1(read_addr[8]), .A2(n329), .B1(n328), .B2(\core/N46 ), 
+        .Z(\core/n90 ) );
+  AOI21D0BWP U370 ( .A1(read_addr[9]), .A2(n325), .B(n324), .ZN(\core/n89 ) );
+  OAI21D0BWP U371 ( .A1(read_addr[9]), .A2(n325), .B(n323), .ZN(n324) );
+  AO21D0BWP U372 ( .A1(\uart_rx_in/bit_cnt [0]), .A2(n305), .B(n304), .Z(
+        \uart_rx_in/n42 ) );
+  AOI32D0BWP U373 ( .A1(n333), .A2(\uart_rx_in/bit_cnt [3]), .A3(n336), .B1(
+        n332), .B2(\uart_rx_in/bit_cnt [3]), .ZN(n334) );
+  NR2D0BWP U374 ( .A1(n330), .A2(\uart_rx_in/baud_cnt [0]), .ZN(
+        \uart_rx_in/N50 ) );
+  NR2D0BWP U375 ( .A1(\uart_rx_in/baud_cnt [11]), .A2(
+        \uart_rx_in/add_96/carry [11]), .ZN(n331) );
+  OAI21D0BWP U376 ( .A1(\uart_rx_in/state [1]), .A2(uart_rx_synch), .B(n256), 
+        .ZN(\uart_rx_in/next_state[0] ) );
+  CKND0BWP U377 ( .I(n210), .ZN(n211) );
+  OR4D0BWP U378 ( .A1(\uart_rx_in/baud_cnt [0]), .A2(\uart_rx_in/baud_cnt [11]), .A3(n252), .A4(n251), .Z(n210) );
+  IND4D0BWP U379 ( .A1(\uart_rx_in/baud_cnt [3]), .B1(\uart_rx_in/baud_cnt [8]), .B2(\uart_rx_in/baud_cnt [1]), .B3(n249), .ZN(n252) );
+  ND4D0BWP U380 ( .A1(\uart_rx_in/baud_cnt [2]), .A2(\uart_rx_in/baud_cnt [4]), 
+        .A3(\uart_rx_in/baud_cnt [10]), .A4(n250), .ZN(n251) );
+  IOA21D0BWP U381 ( .A1(shift_cnt[3]), .A2(n289), .B(n276), .ZN(N28) );
+  AOI21D0BWP U382 ( .A1(write_addr[9]), .A2(n321), .B(n320), .ZN(n40) );
+  OAI21D0BWP U383 ( .A1(write_addr[9]), .A2(n321), .B(n319), .ZN(n320) );
+  AO22D0BWP U384 ( .A1(write_addr[8]), .A2(n303), .B1(n302), .B2(N43), .Z(n41)
+         );
+  AO22D0BWP U385 ( .A1(N42), .A2(n302), .B1(write_addr[7]), .B2(n318), .Z(n42)
+         );
+  AO22D0BWP U386 ( .A1(N41), .A2(n302), .B1(write_addr[6]), .B2(n318), .Z(n43)
+         );
+  AO22D0BWP U387 ( .A1(N40), .A2(n302), .B1(write_addr[5]), .B2(n318), .Z(n44)
+         );
+  AO22D0BWP U388 ( .A1(N39), .A2(n302), .B1(write_addr[4]), .B2(n318), .Z(n45)
+         );
+  AO22D0BWP U389 ( .A1(write_addr[3]), .A2(n303), .B1(n302), .B2(N38), .Z(n46)
+         );
+  AO22D0BWP U390 ( .A1(write_addr[2]), .A2(n303), .B1(n302), .B2(N37), .Z(n47)
+         );
+  AO22D0BWP U391 ( .A1(write_addr[1]), .A2(n303), .B1(n302), .B2(N36), .Z(n49)
+         );
+  IAO21D0BWP U392 ( .A1(shift_cnt[0]), .A2(shift_cnt[1]), .B(n259), .ZN(N26)
+         );
+  NR2D0BWP U393 ( .A1(n318), .A2(shift_cnt[0]), .ZN(N25) );
+  OAI22D0BWP U394 ( .A1(n279), .A2(n277), .B1(n319), .B2(n276), .ZN(
+        next_state[1]) );
+  AO211D0BWP U395 ( .A1(n291), .A2(shift_cnt[3]), .B(n290), .C(n289), .Z(
+        next_state[0]) );
+  OAI31D2BWP U396 ( .A1(\uart_tx_out/bit_cnt [2]), .A2(
+        \uart_tx_out/bit_cnt [0]), .A3(n223), .B(\uart_tx_out/state[0] ), .ZN(
+        n260) );
+  INVD1BWP U397 ( .I(n264), .ZN(n300) );
+  NR4D1BWP U398 ( .A1(\uart_rx_in/baud_cnt [1]), .A2(\uart_rx_in/baud_cnt [4]), 
+        .A3(\uart_rx_in/baud_cnt [10]), .A4(n249), .ZN(n241) );
+  NR4D1BWP U399 ( .A1(\uart_rx_in/baud_cnt [7]), .A2(\uart_rx_in/baud_cnt [6]), 
+        .A3(n243), .A4(n239), .ZN(n240) );
+  OAI211D2BWP U400 ( .A1(\core/cnt_hidden [1]), .A2(n245), .B(
+        \core/curr_state [0]), .C(n244), .ZN(n322) );
+  INVD2BWP U401 ( .I(n308), .ZN(n329) );
+  ND2D1BWP U402 ( .A1(n323), .A2(n307), .ZN(n308) );
+  CKBD3BWP U403 ( .I(n343), .Z(n342) );
+  CKBD4BWP U404 ( .I(n224), .Z(n327) );
+  ND2D1BWP U405 ( .A1(n228), .A2(\core/cnt_hidden [5]), .ZN(n245) );
+  INVD1BWP U406 ( .I(\uart_rx_in/bit_cnt [2]), .ZN(n336) );
+  INVD1BWP U407 ( .I(\core/digit_reg [2]), .ZN(n313) );
+  NR2XD1BWP U408 ( .A1(n298), .A2(n299), .ZN(n301) );
+  ND2D1BWP U409 ( .A1(n236), .A2(n286), .ZN(n298) );
+  CKAN2D2BWP U410 ( .A1(n319), .A2(n291), .Z(n302) );
+  ND4D8BWP U411 ( .A1(write_addr[9]), .A2(write_addr[3]), .A3(n219), .A4(n218), 
+        .ZN(n319) );
+  INR2XD2BWP U412 ( .A1(n323), .B1(n322), .ZN(n328) );
+  NR2XD1BWP U413 ( .A1(n267), .A2(n300), .ZN(n323) );
+  INVD2BWP U414 ( .I(\uart_tx_out/n44 ), .ZN(n212) );
+  CKND16BWP U415 ( .I(n212), .ZN(uart_tx) );
+  CKND3BWP U416 ( .I(n214), .ZN(n330) );
+  NR2D0BWP U417 ( .A1(n255), .A2(n254), .ZN(n215) );
+  CKND0BWP U418 ( .I(n288), .ZN(n216) );
+  IND4D4BWP U419 ( .A1(\uart_rx_in/baud_cnt [0]), .B1(
+        \uart_rx_in/baud_cnt [11]), .B2(n241), .B3(n240), .ZN(n317) );
+  CKBD6BWP U420 ( .I(n343), .Z(n341) );
+  CKBD3BWP U421 ( .I(rst_n), .Z(n343) );
+  CKND0BWP U422 ( .I(n327), .ZN(n278) );
+  TIEHBWP U423 ( .Z(\i_rst_synch/*Logic1* ) );
+  TIELBWP U424 ( .ZN(\core/n79 ) );
+  TIELBWP U425 ( .ZN(\core/n76 ) );
+  NR2XD1BWP U426 ( .A1(n275), .A2(state[1]), .ZN(n291) );
+  INVD2BWP U427 ( .I(n291), .ZN(n318) );
+  NR4D0BWP U428 ( .A1(write_addr[6]), .A2(write_addr[4]), .A3(write_addr[5]), 
+        .A4(write_addr[7]), .ZN(n219) );
+  CKND2D0BWP U429 ( .A1(n318), .A2(n319), .ZN(n274) );
+  MAOI22D0BWP U430 ( .A1(write_addr[0]), .A2(n274), .B1(n291), .B2(
+        write_addr[0]), .ZN(n48) );
+  NR4D0BWP U431 ( .A1(\uart_tx_out/baud [8]), .A2(\uart_tx_out/baud [7]), .A3(
+        \uart_tx_out/baud [6]), .A4(\uart_tx_out/baud [4]), .ZN(n222) );
+  CKND0BWP U432 ( .I(\uart_tx_out/baud [11]), .ZN(n339) );
+  NR4D0BWP U433 ( .A1(\uart_tx_out/baud [0]), .A2(\uart_tx_out/baud [1]), .A3(
+        n339), .A4(n220), .ZN(n221) );
+  ND4D1BWP U434 ( .A1(\uart_tx_out/baud [2]), .A2(\uart_tx_out/baud [3]), .A3(
+        n222), .A4(n221), .ZN(n263) );
+  CKND2D0BWP U435 ( .A1(\uart_tx_out/bit_cnt [3]), .A2(
+        \uart_tx_out/bit_cnt [1]), .ZN(n223) );
+  CKND2D0BWP U436 ( .A1(n327), .A2(\uart_tx_out/shift_reg [2]), .ZN(n227) );
+  NR2XD0BWP U437 ( .A1(n237), .A2(n244), .ZN(n279) );
+  CKND2D0BWP U438 ( .A1(n326), .A2(\uart_tx_out/shift_reg [1]), .ZN(n226) );
+  CKND2D0BWP U439 ( .A1(n227), .A2(n226), .ZN(\uart_tx_out/n32 ) );
+  CKND0BWP U440 ( .I(\core/cnt_hidden [3]), .ZN(n233) );
+  NR4D0BWP U441 ( .A1(\core/cnt_hidden [4]), .A2(\core/cnt_hidden [3]), .A3(
+        \core/cnt_hidden [2]), .A4(\core/cnt_hidden [0]), .ZN(n228) );
+  NR2XD0BWP U442 ( .A1(n245), .A2(n287), .ZN(n286) );
+  NR4D0BWP U443 ( .A1(read_addr[4]), .A2(read_addr[6]), .A3(read_addr[7]), 
+        .A4(read_addr[5]), .ZN(n229) );
+  CKND0BWP U444 ( .I(read_addr[3]), .ZN(n248) );
+  CKND0BWP U445 ( .I(read_addr[0]), .ZN(n306) );
+  CKND2D0BWP U446 ( .A1(\core/curr_state [1]), .A2(n237), .ZN(n266) );
+  CKND0BWP U447 ( .I(n266), .ZN(n236) );
+  CKND0BWP U448 ( .I(\core/digit_reg [0]), .ZN(n299) );
+  ND4D1BWP U449 ( .A1(\core/digit_reg [3]), .A2(\core/digit_reg [1]), .A3(n299), .A4(n313), .ZN(n265) );
+  MOAI22D0BWP U450 ( .A1(n233), .A2(n232), .B1(n232), .B2(\core/N75 ), .ZN(
+        \core/n101 ) );
+  CKND0BWP U451 ( .I(\core/cnt_hidden [4]), .ZN(n234) );
+  MOAI22D0BWP U452 ( .A1(n234), .A2(n232), .B1(n232), .B2(\core/N76 ), .ZN(
+        \core/n100 ) );
+  CKND0BWP U453 ( .I(\core/cnt_hidden [2]), .ZN(n235) );
+  MOAI22D0BWP U454 ( .A1(n235), .A2(n232), .B1(n232), .B2(\core/N74 ), .ZN(
+        \core/n102 ) );
+  MAOI22D0BWP U455 ( .A1(\core/cnt_hidden [0]), .A2(n232), .B1(n232), .B2(
+        \core/cnt_hidden [0]), .ZN(\core/n103 ) );
+  ND4D1BWP U456 ( .A1(n237), .A2(n244), .A3(n275), .A4(state[1]), .ZN(n264) );
+  OR2D0BWP U457 ( .A1(n301), .A2(n300), .Z(n238) );
+  MAOI22D0BWP U458 ( .A1(\core/digit_reg [1]), .A2(n238), .B1(n301), .B2(
+        \core/digit_reg [1]), .ZN(\core/n83 ) );
+  CKND2D0BWP U459 ( .A1(n301), .A2(\core/digit_reg [1]), .ZN(n312) );
+  CKND0BWP U460 ( .I(n298), .ZN(n310) );
+  MAOI22D0BWP U461 ( .A1(n312), .A2(n313), .B1(n313), .B2(n309), .ZN(
+        \core/n84 ) );
+  CKND0BWP U462 ( .I(\uart_rx_in/bit_cnt [0]), .ZN(n316) );
+  CKND0BWP U463 ( .I(\uart_rx_in/baud_cnt [9]), .ZN(n249) );
+  CKND2D0BWP U464 ( .A1(\uart_rx_in/state [0]), .A2(\uart_rx_in/state [1]), 
+        .ZN(n243) );
+  IND4D1BWP U465 ( .A1(\uart_rx_in/baud_cnt [8]), .B1(\uart_rx_in/baud_cnt [5]), .B2(\uart_rx_in/baud_cnt [2]), .B3(\uart_rx_in/baud_cnt [3]), .ZN(n239) );
+  CKND2D0BWP U466 ( .A1(\uart_rx_in/bit_cnt [1]), .A2(n242), .ZN(n335) );
+  NR2XD0BWP U467 ( .A1(n317), .A2(\uart_rx_in/bit_cnt [0]), .ZN(n304) );
+  NR2XD0BWP U468 ( .A1(n243), .A2(n333), .ZN(n305) );
+  NR2XD0BWP U469 ( .A1(n304), .A2(n305), .ZN(n315) );
+  OAI21D1BWP U470 ( .A1(\uart_rx_in/bit_cnt [1]), .A2(n317), .B(n315), .ZN(
+        n332) );
+  MAOI22D0BWP U471 ( .A1(n335), .A2(n336), .B1(n336), .B2(n332), .ZN(
+        \uart_rx_in/n40 ) );
+  CKND0BWP U472 ( .I(n328), .ZN(n307) );
+  CKND2D0BWP U473 ( .A1(n323), .A2(n246), .ZN(\core/n93 ) );
+  CKND2D0BWP U474 ( .A1(n323), .A2(n247), .ZN(\core/n98 ) );
+  MOAI22D0BWP U475 ( .A1(n248), .A2(n308), .B1(n328), .B2(\core/N41 ), .ZN(
+        \core/n95 ) );
+  NR3D0BWP U476 ( .A1(\uart_rx_in/baud_cnt [7]), .A2(\uart_rx_in/baud_cnt [6]), 
+        .A3(\uart_rx_in/baud_cnt [5]), .ZN(n250) );
+  OAI21D1BWP U477 ( .A1(\uart_rx_in/bit_cnt [1]), .A2(n253), .B(
+        \uart_rx_in/state [0]), .ZN(n256) );
+  CKND2D0BWP U478 ( .A1(shift_cnt[0]), .A2(shift_cnt[1]), .ZN(n272) );
+  CKND2D0BWP U479 ( .A1(n291), .A2(n272), .ZN(n259) );
+  CKND0BWP U480 ( .I(shift_cnt[2]), .ZN(n258) );
+  OAI32D1BWP U481 ( .A1(shift_cnt[2]), .A2(n272), .A3(n318), .B1(n259), .B2(
+        n258), .ZN(N27) );
+  CKND0BWP U482 ( .I(n260), .ZN(n262) );
+  CKND0BWP U483 ( .I(\core/cnt_hidden [5]), .ZN(n271) );
+  CKND2D0BWP U484 ( .A1(\core/r95/carry[5] ), .A2(n267), .ZN(n270) );
+  AOI31D1BWP U485 ( .A1(shift_cnt[0]), .A2(shift_cnt[1]), .A3(shift_cnt[2]), 
+        .B(n318), .ZN(n289) );
+  CKND2D0BWP U486 ( .A1(state[1]), .A2(n275), .ZN(n277) );
+  CKND0BWP U487 ( .I(n326), .ZN(n284) );
+  CKND0BWP U488 ( .I(\uart_tx_out/bit_cnt [0]), .ZN(n280) );
+  CKND2D0BWP U489 ( .A1(n327), .A2(n280), .ZN(n283) );
+  CKND2D0BWP U490 ( .A1(\uart_tx_out/bit_cnt [0]), .A2(n327), .ZN(n282) );
+  CKND0BWP U491 ( .I(\uart_tx_out/bit_cnt [1]), .ZN(n281) );
+  CKND2D0BWP U492 ( .A1(\core/N73 ), .A2(n232), .ZN(n285) );
+  OAI31D1BWP U493 ( .A1(n232), .A2(n287), .A3(n286), .B(n285), .ZN(\core/n104 ) );
+  INR4D0BWP U494 ( .A1(uart_rx_synch), .B1(state[0]), .B2(state[1]), .B3(n288), 
+        .ZN(n290) );
+  CKND2D0BWP U495 ( .A1(\uart_tx_out/bit_cnt [0]), .A2(
+        \uart_tx_out/bit_cnt [1]), .ZN(n292) );
+  AOI21D1BWP U496 ( .A1(n327), .A2(n292), .B(n326), .ZN(n297) );
+  CKND0BWP U497 ( .I(\uart_tx_out/bit_cnt [2]), .ZN(n293) );
+  CKND2D0BWP U498 ( .A1(n327), .A2(n293), .ZN(n296) );
+  CKND0BWP U499 ( .I(\uart_tx_out/bit_cnt [3]), .ZN(n294) );
+  OAI32D1BWP U500 ( .A1(n301), .A2(n300), .A3(n299), .B1(n298), .B2(n301), 
+        .ZN(\core/n106 ) );
+  OAI31D1BWP U501 ( .A1(\core/digit_reg [3]), .A2(n313), .A3(n312), .B(n311), 
+        .ZN(\core/n105 ) );
+  CKND0BWP U502 ( .I(\uart_rx_in/bit_cnt [1]), .ZN(n314) );
+  OAI32D1BWP U503 ( .A1(\uart_rx_in/bit_cnt [1]), .A2(n317), .A3(n316), .B1(
+        n315), .B2(n314), .ZN(\uart_rx_in/n39 ) );
+  AOI211XD0BWP U504 ( .A1(\uart_rx_in/baud_cnt [11]), .A2(
+        \uart_rx_in/add_96/carry [11]), .B(n331), .C(n330), .ZN(
+        \uart_rx_in/N61 ) );
+  OAI31D1BWP U505 ( .A1(\uart_rx_in/bit_cnt [3]), .A2(n336), .A3(n335), .B(
+        n334), .ZN(\uart_rx_in/n41 ) );
+  CKND0BWP U506 ( .I(\uart_tx_out/add_65/carry [11]), .ZN(n338) );
+  AOI221D1BWP U507 ( .A1(\uart_tx_out/baud [11]), .A2(
+        \uart_tx_out/add_65/carry [11]), .B1(n339), .B2(n338), .C(n202), .ZN(
+        \uart_tx_out/N46 ) );
+endmodule
+
