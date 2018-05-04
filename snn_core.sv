@@ -51,10 +51,13 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
  always_ff @(posedge clk, negedge rst_n)
   if (!rst_n)
-    max_prob <= 0;
-  else if (check_max)
-    if (lut_out > max_prob)
-      max_prob <= lut_out;
+    max_prob <= 8'h00;
+  else 
+    if (digit_clr)
+      max_prob <= 8'h00;
+    else if (check_max)
+      if (lut_out > max_prob)
+        max_prob <= lut_out;
 
   always_ff @(posedge clk, negedge rst_n)
    if (!rst_n)
@@ -87,15 +90,18 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
     check_max = 0;
     next_state = IDLE;
     write_hidden = 0;
+    addr_input_unit_clr = 0;
 
     case (curr_state)
       IDLE:
         if (start) begin    					//start bit detected
           next_state = MAC1;
           digit_clr = 1;
+          addr_input_unit_clr = 1;
         end
 
       MAC1: begin
+        output_clr = 1;
         if (!addr_input_unit_max)
           mac_clr_n = 1;
         else
@@ -103,7 +109,6 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
 
         if (cnt_hidden_max)	begin
           hidden_clr = 1;
-          output_clr = 1;
           next_state = MAC2;
         end
         else begin
@@ -146,13 +151,15 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   //address input unit counter
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
-      addr_input_unit <= 10'h23;
+      addr_input_unit <= 10'h0;
     else
-      if (addr_input_unit_max)
+      if (addr_input_unit_clr)
+        addr_input_unit <= 10'h23;
+      else if (addr_input_unit_max)
         addr_input_unit <= 10'h23;
       else
         if (inc_input_addr)
-          addr_input_unit <= addr_input_unit+1;
+          addr_input_unit <= addr_input_unit + 1;
 
   //hidden weight address counter
   always_ff @(posedge clk, negedge rst_n)

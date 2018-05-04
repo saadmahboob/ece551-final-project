@@ -1,5 +1,5 @@
 /*
- * Author(s)		: Shubham Singh, Naman Singhal, Jon Sharp, Akshat Khanna
+ * Author(s)	: Shubham Singh, Naman Singhal, Jon Sharp, Akshat Khanna
  * Module name	: snn.sv
  * Modules used	: rst_synch.sv, uart_rx.sv, ram_input.sv, snn_core.sv, uart_tx.sv
  *

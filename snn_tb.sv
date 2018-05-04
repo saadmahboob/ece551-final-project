@@ -7,6 +7,17 @@ module snn_tb();
   logic[7:0] new_byte, led;
   logic[9:0] rom_addr;
 
+  localparam string input_0 = "./Files/input\ samples/ram_input_contents_sample_0.txt";
+  localparam string input_1 = "./Files/input\ samples/ram_input_contents_sample_1.txt";
+  localparam string input_2 = "./Files/input\ samples/ram_input_contents_sample_2.txt";
+  localparam string input_3 = "./Files/input\ samples/ram_input_contents_sample_3.txt";
+  localparam string input_4 = "./Files/input\ samples/ram_input_contents_sample_4.txt";
+  localparam string input_5 = "./Files/input\ samples/ram_input_contents_sample_5.txt";
+  localparam string input_6 = "./Files/input\ samples/ram_input_contents_sample_6.txt";
+  localparam string input_7 = "./Files/input\ samples/ram_input_contents_sample_7.txt";
+  localparam string input_8 = "./Files/input\ samples/ram_input_contents_sample_8.txt";
+  localparam string input_9 = "./Files/input\ samples/ram_input_contents_sample_9.txt";
+
   snn snn_DUT(.clk(clk), .sys_rst_n(rst_n), .led(led), .uart_tx(snn_out), .uart_rx(tx_rx));
   uart_rx rx_to_PC(.clk(clk), .rst_n(rst_n), .rx(snn_out), .rx_rdy(data_rdy), .rx_data(digit_out));
   rom_tb rom_tb(.addr(rom_addr), .clk(clk), .q(q));
@@ -15,7 +26,10 @@ module snn_tb();
   task test_snn;
     input logic[3:0] target_digit;
     input logic[7:0] target_led;
+    input string input_sample;
     int i, j;
+    
+    $readmemh(input_sample, rom_tb.rom);
     byte_rdy = 0;
 
     for (i = 0; i < 98; ++i) begin
@@ -42,7 +56,6 @@ module snn_tb();
       $display("Test passed for target LED %b, output is %b,", target_led, led);
     else
       $display("Test passed for target LED %b, output is %b,", target_led, led);
-    $stop;
   endtask
 
 
@@ -55,7 +68,17 @@ module snn_tb();
     rom_addr = 10'h0;
     #10;
     rst_n = 1;
-    test_snn(4'h0, 8'h09);
+    test_snn(4'h0, 8'h00, input_0);
+    test_snn(4'h2, 8'h02, input_1);
+    test_snn(4'h2, 8'h02, input_2);
+    test_snn(4'h3, 8'h03, input_3);
+    test_snn(4'h4, 8'h04, input_4);
+    test_snn(4'h1, 8'h01, input_5);
+    test_snn(4'h6, 8'h06, input_6);
+    test_snn(4'h7, 8'h07, input_7);
+    test_snn(4'h8, 8'h08, input_8);
+    test_snn(4'h0, 8'h00, input_9);
+    $stop;
   end
 
 endmodule
@@ -68,7 +91,7 @@ module rom_tb (
   // Declare the ROM variable
   reg rom[2**10-1:0];
   initial
-      $readmemh("./Files/input\ samples/ram_input_contents_sample_2.txt", rom);
+      $readmemh("./Files/memory\ initialization\ files/ram_input_contents.txt", rom);
 
   always @(posedge clk) begin
       q <= rom[addr];
