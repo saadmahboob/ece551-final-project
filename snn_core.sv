@@ -4,7 +4,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   state curr_state, next_state;
 
   output logic [9:0] addr_input_unit;
-  output logic [3:0] digit, digit1, digit2;
+  output logic [3:0] digit;
   output logic done;
 
   input logic clk, start, rst_n;
@@ -13,6 +13,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   logic select_input, inc_input_addr, increment_output, write_hidden;
   logic mac_clr_n, output_clr, hidden_clr, addr_input_unit_clr, digit_clr;
 
+  logic [3:0]   digit1, digit2;
   logic [7:0]   q_extended;
   logic [7:0]   ram_hidden_data1, ram_hidden_data2;
   logic [5:0]   cnt_hidden;
@@ -20,12 +21,12 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   logic [7:0]   hidden_weight_q1, hidden_weight_q2;
 
   //MAC stuff
-  logic [7:0]   a, b1, b2, lut_out1, lut_out2;
+  logic [7:0]   a1, a2, b1, b2, lut_out1, lut_out2;
   logic [25:0]  acc1, acc2;
   logic [10:0]  addr_LUT1, addr_LUT2;
 
   //Max stuff
-  logic [7:0]   output_weight_q, max_prob1, max_prob2;
+  logic [7:0]   output_weight_q1, output_weight_q2, max_prob1, max_prob2;
   logic         check_max;
   logic [2:0]   digit_reg1;
   logic [3:0]   digit_reg2;
@@ -43,8 +44,8 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   rom_act_func_lut     act_func_lut(.clk(clk), .addr1(addr_LUT1 + 11'h400), .q1(lut_out1),
                                                 .addr2(addr_LUT2 + 11'h400), .q2(lut_out2));
 
-  mac                  mac1(.clk(clk), .a(a), .b(b1), .acc(acc1), .clr_n(mac_clr_n), .rst_n(rst_n), .addr_LUT(addr_LUT1));
-  mac                  mac2(.clk(clk), .a(a), .b(b2), .acc(acc2), .clr_n(mac_clr_n), .rst_n(rst_n), .addr_LUT(addr_LUT2));
+  mac                  mac1(.clk(clk), .a(a1), .b(b1), .acc(acc1), .clr_n(mac_clr_n), .rst_n(rst_n), .addr_LUT(addr_LUT1));
+  mac                  mac2(.clk(clk), .a(a2), .b(b2), .acc(acc2), .clr_n(mac_clr_n), .rst_n(rst_n), .addr_LUT(addr_LUT2));
 
   assign q_extended = (q_input) ? 8'h7F : 8'h00;
 
@@ -55,7 +56,8 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   //MAC 2
   assign cnt_hidden_max_out = cnt_hidden == 6'h11 ? 1 : 0;
 
-  assign a = select_input ? ram_hidden_data : q_extended;
+  assign a1 = select_input ? ram_hidden_data1 : q_extended;
+  assign a2 = select_input ? ram_hidden_data2 : q_extended;
   assign b1 = select_input ? output_weight_q1 : hidden_weight_q1;
   assign b2 = select_input ? output_weight_q2 : hidden_weight_q2;
 
@@ -238,13 +240,23 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   //output weight address counter
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
-      cnt_output <= 4'h0;
+      cnt_output1 <= 3'h0;
     else
       if (output_clr)
-        cnt_output <= 4'h0;
+        cnt_output1 <= 3'h0;
       else
         if (cnt_hidden_max)
-          cnt_output <= cnt_output + 1;
+          cnt_output1 <= cnt_output1 + 1;
+
+  always_ff @(posedge clk, negedge rst_n)
+    if (!rst_n)
+      cnt_output2 <= 4'h5;
+    else
+      if (output_clr)
+        cnt_output2 <= 4'h5;
+      else
+        if (cnt_hidden_max)
+          cnt_output2 <= cnt_output2 + 1;
 
   //digit of max prob needs to be one clock cycle behind input address
   always_ff @(posedge clk, negedge rst_n)

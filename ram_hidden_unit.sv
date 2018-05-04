@@ -5,7 +5,7 @@ module ram_hidden_unit (
   input [4:0] addr2,
   input we, clk,
   output [7:0] q1,
-  output [7:0] q1);
+  output [7:0] q2);
   // Declare the RAM variable
   reg [7:0] ram[2**5-1:0];
   // Variable to hold the registered read address
