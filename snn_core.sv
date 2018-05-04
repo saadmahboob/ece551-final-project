@@ -38,7 +38,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   assign q_extended = (q_input) ? 8'h7F : 8'h00;
 
   //MAC 1
-  assign addr_input_unit_max = addr_input_unit == 10'h304 ? 1 : 0;
+  assign addr_input_unit_max = addr_input_unit == 10'h306 ? 1 : 0;
   assign cnt_hidden_max = cnt_hidden == 6'h20 ? 1 : 0;
 
   //MAC 2
@@ -151,7 +151,7 @@ module snn_core(start, clk, rst_n, q_input, addr_input_unit, digit, done);
   //address input unit counter
   always_ff @(posedge clk, negedge rst_n)
     if (!rst_n)
-      addr_input_unit <= 10'h22;
+      addr_input_unit <= 10'h00;
     else
       if (addr_input_unit_clr)
         addr_input_unit <= 10'h22;
