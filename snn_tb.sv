@@ -35,13 +35,12 @@
      input logic[3:0] target_digit;
      input logic[7:0] target_led;
      input string input_sample;
-     
+     int i, j;
      //update input sample
      $readmemh(input_sample, rom_tb.rom);
      //data initially garbage
      byte_rdy = 0;
- 
-     int i, j;
+
      //i is current byte
      for (i = 0; i < 98; ++i) begin
         //j is current bit in the byte
