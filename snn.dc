@@ -6,7 +6,7 @@ set current_design snn
 
 
 # Create clock pin with period of 40ns and set uncertainty to 0.1ns
-create_clock -name "clk" -period 2.5 -waveform { 0 1 } {clk}
+create_clock -name "clk" -period 2.5 -waveform { 0 1.25 } {clk}
 set_dont_touch_network [find port clk]
 
 # Set input delay of 0.5ns and drive strength equal to ND2D2BWP gate

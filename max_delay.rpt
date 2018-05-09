@@ -7,7 +7,7 @@ Report : timing
         -max_paths 1
 Design : snn
 Version: M-2016.12
-Date   : Fri May  4 15:54:57 2018
+Date   : Wed May  9 11:15:52 2018
 ****************************************
 
 Operating Conditions: NCCOM   Library: tcbn40lpbwptc
@@ -31,18 +31,18 @@ Wire Load Model Mode: segmented
   clock network delay (ideal)                             0.00       0.00
   uart_tx_out/baud_reg[0]/CP (DFCNQD1BWP)                 0.00       0.00 r
   uart_tx_out/baud_reg[0]/Q (DFCNQD1BWP)                  0.14       0.14 r
-  uart_tx_out/add_65/U1_1_1/CO (HA1D0BWP)                 0.08       0.23 r
-  uart_tx_out/add_65/U1_1_2/CO (HA1D0BWP)                 0.08       0.31 r
-  uart_tx_out/add_65/U1_1_3/CO (HA1D0BWP)                 0.08       0.39 r
-  uart_tx_out/add_65/U1_1_4/CO (HA1D0BWP)                 0.08       0.48 r
-  uart_tx_out/add_65/U1_1_5/CO (HA1D0BWP)                 0.08       0.56 r
-  uart_tx_out/add_65/U1_1_6/CO (HA1D0BWP)                 0.08       0.64 r
-  uart_tx_out/add_65/U1_1_7/CO (HA1D0BWP)                 0.08       0.72 r
-  uart_tx_out/add_65/U1_1_8/CO (HA1D0BWP)                 0.08       0.81 r
-  uart_tx_out/add_65/U1_1_9/CO (HA1D0BWP)                 0.08       0.89 r
-  uart_tx_out/add_65/U1_1_10/CO (HA1D0BWP)                0.08       0.97 r
-  U506/ZN (CKND0BWP)                                      0.03       1.00 f
-  U507/ZN (AOI221D1BWP)                                   0.09       1.09 r
+  uart_tx_out/add_73/U1_1_1/CO (HA1D0BWP)                 0.08       0.23 r
+  uart_tx_out/add_73/U1_1_2/CO (HA1D0BWP)                 0.08       0.31 r
+  uart_tx_out/add_73/U1_1_3/CO (HA1D0BWP)                 0.08       0.39 r
+  uart_tx_out/add_73/U1_1_4/CO (HA1D0BWP)                 0.08       0.48 r
+  uart_tx_out/add_73/U1_1_5/CO (HA1D0BWP)                 0.08       0.56 r
+  uart_tx_out/add_73/U1_1_6/CO (HA1D0BWP)                 0.08       0.64 r
+  uart_tx_out/add_73/U1_1_7/CO (HA1D0BWP)                 0.08       0.72 r
+  uart_tx_out/add_73/U1_1_8/CO (HA1D0BWP)                 0.08       0.81 r
+  uart_tx_out/add_73/U1_1_9/CO (HA1D0BWP)                 0.08       0.89 r
+  uart_tx_out/add_73/U1_1_10/CO (HA1D0BWP)                0.08       0.97 r
+  U507/ZN (CKND0BWP)                                      0.03       1.00 f
+  U508/ZN (AOI221D1BWP)                                   0.09       1.09 r
   uart_tx_out/baud_reg[11]/D (DFCNQD1BWP)                 0.00       1.09 r
   data arrival time                                                  1.09
 
